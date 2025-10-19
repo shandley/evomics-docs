@@ -1,18 +1,173 @@
 ---
 title: R for Biologists
-description: Coming Soon
+description: Modern data analysis and visualization with R and the tidyverse
 ---
+
+import { Callout } from 'fumadocs-ui/components/callout';
 
 # R for Biologists
 
-This guide is coming soon. It will cover data analysis and visualization with R and tidyverse.
+**Modern Data Analysis and Visualization with the Tidyverse**
 
-## Planned Content
+Master R programming for biological data analysis. From data wrangling to publication-quality visualizations, this guide provides quick-reference documentation for the tidyverse ecosystem.
 
-- Introduction to R and RStudio
-- Data wrangling with dplyr and tidyr
-- Visualization with ggplot2
-- Statistical testing
-- Reproducible research
+## About This Guide
 
-Stay tuned!
+This is a **reference guide** focused on concepts, syntax, and workflows. For comprehensive interactive learning with exercises and homework, see our [full 18-lesson course](https://github.com/shandley/R-tutorials).
+
+**Best used for**:
+- Quick syntax lookup
+- Function reference
+- Workflow examples
+- Biological use cases
+
+**Not a replacement for**:
+- Interactive practice (use the full course)
+- Beginner tutorials (start with the course)
+- Hands-on exercises (see the course)
+
+## What You'll Find Here
+
+### Core Tidyverse
+
+**Data Manipulation** (coming soon)
+- Filter, select, and transform data with `dplyr`
+- Group and summarize datasets
+- Join multiple data sources
+
+**Data Reshaping** (coming soon)
+- Pivot data between wide and long formats with `tidyr`
+- Handle nested data and list columns
+- Tidy data principles
+
+**Visualization** (coming soon)
+- Create publication-quality plots with `ggplot2`
+- Grammar of Graphics concepts
+- Customizing themes and aesthetics
+
+### Specialized Tools
+
+**String Manipulation** (coming soon)
+- Pattern matching and extraction with `stringr`
+- Regular expressions for biological data
+- Working with gene IDs and sequences
+
+**Date and Time** (coming soon)
+- Parse and manipulate dates with `lubridate`
+- Time series analysis
+- Longitudinal biological data
+
+**Functional Programming** (coming soon)
+- Iterate with `purrr` map functions
+- Work with list columns
+- Error handling in pipelines
+
+### Statistical Analysis
+
+**Hypothesis Testing** (coming soon)
+- t-tests, ANOVA, non-parametric tests
+- Multiple testing correction
+- Tidy statistical results with `broom`
+
+**Linear Models** (coming soon)
+- Simple and multiple regression
+- Generalized linear models
+- Model diagnostics
+
+**Machine Learning** (coming soon)
+- Classification and regression with `tidymodels`
+- Cross-validation and tuning
+- Model evaluation
+
+### Biological Workflows
+
+**RNA-seq Analysis** (coming soon)
+- Gene expression data workflows
+- Differential expression
+- PCA and heatmaps
+
+**Microbiome Analysis** (coming soon)
+- 16S amplicon data
+- Diversity metrics
+- Taxonomic composition
+
+**Metagenomics** (coming soon)
+- Shotgun metagenomic data
+- Functional annotation
+- Pathway analysis
+
+## Learning Path
+
+<Callout type="info" title="New to R?">
+**Start with the full course**: [R and Tidyverse for Biology Graduate Students](https://github.com/shandley/R-tutorials)
+
+The 18-lesson interactive course provides structured learning from basics to advanced topics, with hands-on exercises designed for posit.cloud.
+
+Once you're comfortable with R, use this reference guide for quick lookups and workflow examples.
+</Callout>
+
+**For experienced R users**:
+- Jump to specific topics using the sidebar
+- Reference function syntax
+- Copy workflow examples for your analyses
+
+## Prerequisites
+
+- Basic understanding of biological concepts
+- Access to R and RStudio (local install or posit.cloud)
+- Familiarity with data frames and basic programming (helpful but not required)
+
+## The Tidyverse Ecosystem
+
+The tidyverse is a collection of R packages designed for data science with a consistent philosophy and grammar:
+
+- **dplyr**: Data manipulation
+- **ggplot2**: Data visualization
+- **tidyr**: Data reshaping
+- **readr**: Data import
+- **purrr**: Functional programming
+- **stringr**: String manipulation
+- **lubridate**: Date/time handling
+
+All designed to work together seamlessly with the pipe operator `%>%` (or `|>`).
+
+## Philosophy
+
+This guide emphasizes:
+
+1. **Tidyverse-first**: Modern R syntax over base R when possible
+2. **Real biology**: Examples use actual biological datasets
+3. **Practical workflows**: Copy-paste-adapt for your research
+4. **Quick reference**: Fast lookups over comprehensive tutorials
+5. **Reproducibility**: All code runs independently
+
+## Getting Help
+
+- **Syntax questions**: Use this reference guide
+- **Learning R**: Try the [full interactive course](https://github.com/shandley/R-tutorials)
+- **Tidyverse documentation**: [tidyverse.org](https://www.tidyverse.org/)
+- **R for Data Science**: [r4ds.hadley.nz](https://r4ds.hadley.nz/)
+
+<Callout title="Under Construction">
+This reference guide is currently being developed. Content is being extracted and reorganized from our comprehensive 18-lesson course.
+
+Check back soon for:
+- Data manipulation guides
+- Visualization tutorials
+- Statistical analysis workflows
+- Biological use case examples
+</Callout>
+
+## Additional Resources
+
+- [RStudio Education](https://education.rstudio.com/)
+- [Posit Community](https://community.rstudio.com/)
+- [Tidy Tuesday](https://github.com/rfordatascience/tidytuesday) - Weekly data practice
+- [Bioconductor](https://www.bioconductor.org/) - Bioinformatics in R
+
+---
+
+**Part of the Evomics Learning Ecosystem**:
+- [Evomics Learn](https://learn.evomics.org) - Interactive practice
+- [Evomics Docs](https://docs.evomics.org) - Reference guides (you are here)
+- [UNIX Guide](https://docs.evomics.org/unix) - Command-line genomics

@@ -1,0 +1,10 @@
+{
+  "title": "R for Biologists",
+  "pages": [
+    "index",
+    "---Core tidyverse---",
+    "---Specialized Tools---",
+    "---Statistical Analysis---",
+    "---Biological Workflows---"
+  ]
+}
