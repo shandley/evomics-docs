@@ -1,7 +1,8 @@
-import { source } from '@/lib/source';
+import { unixSource } from '@/lib/source';
 import { createFromSource } from 'fumadocs-core/search/server';
 
-export const { GET } = createFromSource(source, {
+// TODO: Add rSource when R guide content is available
+export const { GET } = createFromSource(unixSource, {
   // https://docs.orama.com/docs/orama-js/supported-languages
   language: 'english',
 });

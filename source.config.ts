@@ -5,9 +5,23 @@ import {
   metaSchema,
 } from 'fumadocs-mdx/config';
 
-// You can customise Zod schemas for frontmatter and `meta.json` here
-// see https://fumadocs.dev/docs/mdx/collections
-export const docs = defineDocs({
+// Define multiple documentation collections
+export const unix = defineDocs({
+  dir: 'content/unix',
+  docs: {
+    schema: frontmatterSchema,
+    postprocess: {
+      includeProcessedMarkdown: true,
+    },
+  },
+  meta: {
+    schema: metaSchema,
+  },
+});
+
+// Placeholder for future R guide
+export const r = defineDocs({
+  dir: 'content/r',
   docs: {
     schema: frontmatterSchema,
     postprocess: {

@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { Terminal, BookOpen, Zap, Users } from 'lucide-react';
+import { Terminal, BarChart3, Dna, BookOpen } from 'lucide-react';
 
 export const metadata = {
-  title: 'UNIX for Biologists',
-  description: 'Command-Line Genomics from Beginner to Expert',
+  title: 'Evomics Documentation',
+  description: 'Comprehensive guides for computational biology and bioinformatics',
 };
 
 export default function HomePage() {
@@ -12,94 +12,157 @@ export default function HomePage() {
       {/* Hero Section */}
       <div className="text-center mb-16">
         <h1 className="text-5xl font-bold mb-4">
-          UNIX for Biologists
+          Evomics Documentation
         </h1>
         <p className="text-xl text-muted-foreground mb-8">
-          Command-Line Genomics from Beginner to Expert
+          Master Computational Biology
         </p>
         <p className="text-lg text-muted-foreground max-w-3xl mx-auto mb-8">
-          Master the command line for genomic data analysis. From basic navigation to advanced
-          bioinformatics workflows, this guide transforms wet lab biologists into computational powerhouses.
+          Comprehensive guides covering everything from command-line basics to advanced
+          bioinformatics workflows. Part of the Evomics Learning Ecosystem.
         </p>
-        <div className="flex gap-4 justify-center flex-wrap">
-          <Link
-            href="/docs"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
-          >
-            <BookOpen className="w-5 h-5" />
-            Read the Docs
-          </Link>
-          <Link
-            href="https://learn.evomics.org/terminal"
-            className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium hover:bg-accent transition-colors"
-          >
-            <Terminal className="w-5 h-5" />
-            Interactive Practice
-          </Link>
+        <Link
+          href="https://learn.evomics.org"
+          className="inline-flex items-center gap-2 px-6 py-3 border border-border rounded-lg font-medium hover:bg-accent transition-colors"
+        >
+          <Terminal className="w-5 h-5" />
+          Interactive Practice Platform
+        </Link>
+      </div>
+
+      {/* Guides Grid */}
+      <div className="mb-16">
+        <h2 className="text-3xl font-bold mb-8 text-center">Available Guides</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          <GuideCard
+            icon={<Terminal className="w-8 h-8" />}
+            title="UNIX for Biologists"
+            description="Command-line genomics from beginner to expert. Master grep, sed, awk, and modern bioinformatics utilities."
+            href="/unix"
+            status="available"
+            topics={['Command Line', 'Text Processing', 'HPC Clusters', 'Scripting']}
+          />
+
+          <GuideCard
+            icon={<BarChart3 className="w-8 h-8" />}
+            title="R for Biologists"
+            description="Data analysis and visualization with R and tidyverse. From basics to advanced statistical methods."
+            href="/r"
+            status="coming-soon"
+            topics={['tidyverse', 'ggplot2', 'Statistics', 'Data Wrangling']}
+          />
+
+          <GuideCard
+            icon={<Dna className="w-8 h-8" />}
+            title="Virome Analysis"
+            description="Viral metagenomics and discovery. Tools and workflows for studying viral communities."
+            href="/virome"
+            status="coming-soon"
+            topics={['Viral Discovery', 'Assembly', 'Classification', 'Ecology']}
+          />
+
+          <GuideCard
+            icon={<BookOpen className="w-8 h-8" />}
+            title="Statistics for Biologists"
+            description="Statistical methods for biological data. Hypothesis testing, regression, and experimental design."
+            href="/stats"
+            status="coming-soon"
+            topics={['Hypothesis Testing', 'Regression', 'Design', 'Power Analysis']}
+          />
         </div>
       </div>
 
-      {/* Features Grid */}
-      <div className="grid md:grid-cols-2 gap-6 mb-16">
-        <FeatureCard
-          icon={<BookOpen className="w-6 h-6" />}
-          title="Biology-First Approach"
-          description="Every example uses real genomic data. FASTA, FASTQ, GFF, VCF files from actual research."
-        />
-        <FeatureCard
-          icon={<Zap className="w-6 h-6" />}
-          title="Modern Toolchain"
-          description="Beyond grep and awk. Learn bioawk, seqtk, csvtk, parallel processing, and modern bioinformatics utilities."
-        />
-        <FeatureCard
-          icon={<Terminal className="w-6 h-6" />}
-          title="Beginner to Expert"
-          description="Start with pwd and ls. End with automated pipelines processing thousands of samples on HPC clusters."
-        />
-        <FeatureCard
-          icon={<Users className="w-6 h-6" />}
-          title="Interactive Practice"
-          description="Every concept links to hands-on exercises on Evomics Learn with instant feedback."
-        />
-      </div>
-
-      {/* Quick Start */}
+      {/* Ecosystem Overview */}
       <div className="border border-border rounded-lg p-8 bg-card">
-        <h2 className="text-2xl font-bold mb-4">Who This Guide Is For</h2>
-        <ul className="space-y-2 text-muted-foreground">
-          <li>• Biology graduate students starting computational work</li>
-          <li>• Wet lab biologists moving into bioinformatics</li>
-          <li>• Bioinformaticians leveling up command-line skills</li>
-          <li>• Anyone working with genomic data on UNIX/Linux</li>
-        </ul>
+        <h2 className="text-2xl font-bold mb-4">Multi-Modal Learning</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="font-semibold mb-2 flex items-center gap-2">
+              <Terminal className="w-5 h-5 text-primary" />
+              Interactive Practice
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              Hands-on exercises with instant feedback at{' '}
+              <Link href="https://learn.evomics.org" className="text-primary hover:underline">
+                learn.evomics.org
+              </Link>
+            </p>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-2 flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-primary" />
+              Comprehensive Guides
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              Deep explanations, advanced techniques, and reference materials (you are here)
+            </p>
+          </div>
+        </div>
+
         <p className="mt-4 text-sm text-muted-foreground">
-          No programming experience required. Familiarity with basic biology assumed.
+          Alternate between reading and practicing for optimal learning. Each guide links to relevant
+          exercises on the interactive platform.
         </p>
       </div>
     </main>
   );
 }
 
-function FeatureCard({
+function GuideCard({
   icon,
   title,
-  description
+  description,
+  href,
+  status,
+  topics,
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
+  href: string;
+  status: 'available' | 'coming-soon';
+  topics: string[];
 }) {
-  return (
-    <div className="border border-border rounded-lg p-6 hover:border-primary/50 transition-colors">
-      <div className="flex items-start gap-4">
+  const CardContent = (
+    <div className={`border border-border rounded-lg p-6 h-full flex flex-col ${
+      status === 'available' ? 'hover:border-primary/50 cursor-pointer' : 'opacity-60'
+    } transition-colors`}>
+      <div className="flex items-start gap-4 mb-4">
         <div className="text-primary mt-1">
           {icon}
         </div>
-        <div>
-          <h3 className="font-semibold mb-2">{title}</h3>
-          <p className="text-sm text-muted-foreground">{description}</p>
+        <div className="flex-1">
+          <div className="flex items-center gap-2 mb-2">
+            <h3 className="font-bold text-xl">{title}</h3>
+            {status === 'coming-soon' && (
+              <span className="text-xs px-2 py-1 bg-muted rounded-full text-muted-foreground">
+                Coming Soon
+              </span>
+            )}
+          </div>
+          <p className="text-sm text-muted-foreground mb-4">{description}</p>
+        </div>
+      </div>
+
+      <div className="mt-auto">
+        <div className="flex flex-wrap gap-2">
+          {topics.map((topic) => (
+            <span
+              key={topic}
+              className="text-xs px-2 py-1 bg-primary/10 text-primary rounded"
+            >
+              {topic}
+            </span>
+          ))}
         </div>
       </div>
     </div>
   );
+
+  if (status === 'available') {
+    return <Link href={href}>{CardContent}</Link>;
+  }
+
+  return CardContent;
 }

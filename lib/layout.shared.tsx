@@ -10,14 +10,18 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      title: 'UNIX for Biologists',
+      title: 'Evomics Docs',
     },
     // see https://fumadocs.dev/docs/ui/navigation/links
     links: [
       {
-        text: 'Evomics Learn',
+        text: 'Interactive Practice',
         url: 'https://learn.evomics.org',
         external: true,
+      },
+      {
+        text: 'All Guides',
+        url: '/',
       },
     ],
     githubUrl: 'https://github.com/shandley/unix-for-biologists',
