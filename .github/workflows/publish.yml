@@ -25,6 +25,8 @@ jobs:
 
       - name: Render Quarto book
         uses: quarto-dev/quarto-actions/render@v2
+        with:
+          to: html
 
       - name: Deploy to GitHub Pages
         uses: quarto-dev/quarto-actions/publish@v2
