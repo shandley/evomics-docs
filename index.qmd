@@ -1,0 +1,106 @@
+# Welcome {.unnumbered}
+
+Welcome to **UNIX for Biologists**, a comprehensive guide to mastering the command line for genomic data analysis.
+
+## About This Guide
+
+This guide teaches UNIX and command-line skills specifically for biologists and bioinformaticians. Whether you're analyzing RNA-seq data, processing genome assemblies, or working with variant calls, the command line is an essential tool in modern biological research.
+
+**What makes this guide different:**
+
+- **Biology-first examples** - Every concept illustrated with real genomic data
+- **Beginner to expert** - Start with basics, progress to advanced techniques
+- **Practical workflows** - Real bioinformatics pipelines, not toy examples
+- **Modern tools** - Beyond grep/awk to bioawk, seqtk, parallel processing
+- **HPC cluster skills** - Working on remote servers and batch systems
+- **Integrated learning** - Links to interactive exercises on [Evomics Learn](https://learn.evomics.org)
+
+## Who This Guide Is For
+
+- **Biology graduate students** starting computational work
+- **Wet lab biologists** moving into bioinformatics
+- **Bioinformaticians** looking to level up their command-line skills
+- **Anyone** working with genomic data on UNIX/Linux systems
+
+No programming experience required, though familiarity with basic biology and genetics is assumed.
+
+## Learning Path
+
+This guide is organized into progressively advanced sections:
+
+**Foundations** - Learn the essential commands and concepts. Understand file systems, permissions, and basic text manipulation.
+
+**Text Processing Mastery** - Master grep, sed, awk, and modern alternatives. Learn to build powerful command pipelines.
+
+**Biological Applications** - Work with FASTA, FASTQ, GFF, VCF, and other genomic file formats. Optimize performance for large datasets.
+
+**Advanced Topics** - HPC cluster workflows, bash scripting, automation, and parallel processing.
+
+**Reference** - Curated one-liners library and troubleshooting guide.
+
+## Interactive Practice
+
+This guide is part of the **Evomics Learning Ecosystem**:
+
+- **[Evomics Learn](https://learn.evomics.org)** - Interactive terminal exercises with instant feedback
+- **This Guide** - Comprehensive reference and advanced techniques
+- **[R for Biologists](https://github.com/shandley/r-tidyverse-for-biologists)** - Complementary R programming course
+
+We recommend alternating between reading this guide and practicing on the interactive platform.
+
+## Prerequisites
+
+- Access to a UNIX/Linux terminal:
+  - **macOS**: Terminal app (already installed)
+  - **Linux**: Terminal/bash (already installed)
+  - **Windows**: WSL (Windows Subsystem for Linux)
+  - **Cloud**: [Evomics Learn](https://learn.evomics.org/terminal) (no installation needed!)
+
+That's it! Everything else will be covered in this guide.
+
+## How to Use This Guide
+
+**If you're a complete beginner:**
+
+1. Start with [Chapter 1: Foundations](chapters/01-foundations.qmd)
+2. Practice each concept on [Evomics Learn](https://learn.evomics.org/terminal)
+3. Work through chapters sequentially
+4. Complete exercises before moving forward
+
+**If you have some experience:**
+
+- Jump to specific chapters that interest you
+- Use the [One-Liners Library](chapters/09-oneliners.qmd) as a quick reference
+- Explore [Power Tools](chapters/04-power-tools.qmd) for modern alternatives
+
+**If you're advanced:**
+
+- Focus on [HPC Clusters](chapters/07-hpc-clusters.qmd) and [Scripting](chapters/08-scripting.qmd)
+- Check out lesser-known tools in [Power Tools](chapters/04-power-tools.qmd)
+- Use [One-Liners](chapters/09-oneliners.qmd) to optimize your workflows
+
+## Contributing
+
+Found an error? Have a suggestion? Want to contribute a clever one-liner?
+
+- [Open an issue](https://github.com/shandley/unix-for-biologists/issues)
+- [Submit a pull request](https://github.com/shandley/unix-for-biologists/pulls)
+- [Start a discussion](https://github.com/shandley/unix-for-biologists/discussions)
+
+## License
+
+This guide is licensed under the [MIT License](https://github.com/shandley/unix-for-biologists/blob/main/LICENSE). Free to use and adapt with attribution.
+
+## Acknowledgments
+
+This guide builds on the collective knowledge of the bioinformatics community, including:
+
+- Stephen Turner's [Bioinformatics One-Liners](https://github.com/stephenturner/oneliners)
+- The many excellent UNIX tutorials and resources cited throughout
+- The Evomics Workshop series and community
+
+---
+
+Ready to begin? Start with [Chapter 1: Foundations →](chapters/01-foundations.qmd)
+
+Or practice interactively at [Evomics Learn →](https://learn.evomics.org/terminal)

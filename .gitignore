@@ -1,0 +1,29 @@
+# Quarto
+/.quarto/
+/_site/
+*.html
+*.pdf
+*.epub
+
+# R
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary
+*.tmp
+*.bak
+*.log

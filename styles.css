@@ -1,0 +1,48 @@
+/* Custom styles for UNIX for Biologists */
+
+/* Code blocks */
+pre {
+  border-left: 3px solid #31BAE9;
+  border-radius: 4px;
+}
+
+/* Command prompt styling */
+code .op {
+  color: #31BAE9;
+}
+
+/* Inline code */
+code {
+  background-color: rgba(49, 186, 233, 0.1);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+/* Callout boxes */
+.callout {
+  margin: 1.5rem 0;
+}
+
+/* Links */
+a {
+  color: #31BAE9;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Table styling for file listings */
+table {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+/* Footer styling */
+.page-footer {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid #dee2e6;
+  font-size: 0.875rem;
+}

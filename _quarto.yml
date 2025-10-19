@@ -1,0 +1,84 @@
+project:
+  type: book
+  output-dir: _site
+
+book:
+  title: "UNIX for Biologists"
+  subtitle: "Command-Line Genomics from Beginner to Expert"
+  author: "Scott Handley"
+  date: today
+  repo-url: https://github.com/shandley/unix-for-biologists
+  repo-actions: [edit, issue]
+
+  chapters:
+    - index.qmd
+
+    - part: "Foundations"
+      chapters:
+        - chapters/01-foundations.qmd
+        - chapters/02-essential-commands.qmd
+
+    - part: "Text Processing Mastery"
+      chapters:
+        - chapters/03-text-processing.qmd
+        - chapters/04-power-tools.qmd
+
+    - part: "Biological Applications"
+      chapters:
+        - chapters/05-biological-formats.qmd
+        - chapters/06-performance.qmd
+
+    - part: "Advanced Topics"
+      chapters:
+        - chapters/07-hpc-clusters.qmd
+        - chapters/08-scripting.qmd
+
+    - part: "Reference"
+      chapters:
+        - chapters/09-oneliners.qmd
+        - chapters/10-troubleshooting.qmd
+
+    - part: "Appendices"
+      chapters:
+        - appendices/cheatsheet.qmd
+        - appendices/regex-guide.qmd
+        - appendices/file-formats.qmd
+
+  page-footer:
+    left: |
+      Part of the [Evomics Learning Ecosystem](https://learn.evomics.org)
+    right: |
+      Built with [Quarto](https://quarto.org/)
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    code-copy: true
+    code-fold: false
+    code-overflow: wrap
+    code-block-bg: true
+    code-block-border-left: "#31BAE9"
+    toc: true
+    toc-depth: 3
+    toc-title: "On this page"
+    number-sections: true
+    number-depth: 3
+    link-external-newwindow: true
+    highlight-style: github
+    css: styles.css
+
+  pdf:
+    documentclass: book
+    toc: true
+    number-sections: true
+    colorlinks: true
+    keep-tex: false
+
+execute:
+  freeze: auto
+  echo: true
+  warning: false

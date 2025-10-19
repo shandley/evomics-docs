@@ -1,0 +1,11 @@
+##gff-version 3
+chr1	RefSeq	gene	1000	2000	.	+	.	ID=gene1;Name=rplA;product=ribosomal protein L1
+chr1	RefSeq	CDS	1000	2000	.	+	0	ID=cds1;Parent=gene1
+chr1	RefSeq	gene	3000	4500	.	+	.	ID=gene2;Name=hsp70;product=heat shock protein
+chr1	RefSeq	CDS	3000	4500	.	+	0	ID=cds2;Parent=gene2
+chr2	RefSeq	gene	500	1800	.	-	.	ID=gene3;Name=atpB;product=ATP synthase subunit
+chr2	RefSeq	CDS	500	1800	.	-	0	ID=cds3;Parent=gene3
+chr2	RefSeq	gene	5000	6200	.	+	.	ID=gene4;Name=coxA;product=cytochrome c oxidase
+chr2	RefSeq	CDS	5000	6200	.	+	0	ID=cds4;Parent=gene4
+chr3	RefSeq	gene	100	800	.	+	.	ID=gene5;Name=rpsJ;product=ribosomal protein S10
+chr3	RefSeq	CDS	100	800	.	+	0	ID=cds5;Parent=gene5
