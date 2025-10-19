@@ -48,7 +48,7 @@ export default function HomePage() {
             title="R for Biologists"
             description="Data analysis and visualization with R and tidyverse. From basics to advanced statistical methods."
             href="/r"
-            status="coming-soon"
+            status="available"
             topics={['tidyverse', 'ggplot2', 'Statistics', 'Data Wrangling']}
           />
 
