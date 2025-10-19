@@ -37,13 +37,33 @@ body {
   line-height: 1.7;
 }
 
-// Headers with gradient
+// Fullscreen layout
+#quarto-content {
+  max-width: 100%;
+  padding: 0;
+}
+
+.page-columns {
+  max-width: none;
+}
+
+main.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+// Sidebar full height
+.sidebar-navigation {
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+// Headers - solid colors, no gradients
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
-  background: linear-gradient(135deg, $terminal-cyan 0%, $terminal-green 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: $terminal-cyan;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
@@ -53,7 +73,7 @@ h1.title {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  text-shadow: 0 0 20px rgba(121, 192, 255, 0.3);
+  color: $terminal-cyan;
 }
 
 .subtitle {

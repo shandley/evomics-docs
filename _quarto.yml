@@ -57,6 +57,11 @@ format:
     theme: [default, custom.scss]
     mainfont: "Inter"
     monofont: "JetBrains Mono"
+    page-layout: full
+    grid:
+      sidebar-width: 300px
+      body-width: 1200px
+      margin-width: 300px
     code-copy: true
     code-fold: false
     code-overflow: wrap
