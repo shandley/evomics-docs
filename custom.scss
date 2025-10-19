@@ -1,0 +1,361 @@
+/*-- scss:defaults --*/
+
+// Terminal-inspired color palette
+$body-bg: #0d1117;
+$body-color: #c9d1d9;
+$link-color: #58a6ff;
+$link-hover-color: #79c0ff;
+$code-bg: #161b22;
+$code-color: #79c0ff;
+
+// Monospace fonts
+$font-family-monospace: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'SF Mono', Monaco, 'Courier New', monospace;
+$font-family-sans-serif: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+// Accent colors
+$primary: #58a6ff;
+$success: #3fb950;
+$warning: #d29922;
+$danger: #f85149;
+$info: #79c0ff;
+
+// Terminal green accents
+$terminal-green: #3fb950;
+$terminal-cyan: #79c0ff;
+$terminal-yellow: #d29922;
+
+/*-- scss:rules --*/
+
+// Import fonts
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+// Body styling
+body {
+  font-family: $font-family-sans-serif;
+  background: $body-bg;
+  color: $body-color;
+  line-height: 1.7;
+}
+
+// Headers with gradient
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  background: linear-gradient(135deg, $terminal-cyan 0%, $terminal-green 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+// Chapter titles extra large
+h1.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(121, 192, 255, 0.3);
+}
+
+.subtitle {
+  color: #8b949e;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 2rem;
+}
+
+// Code blocks with terminal styling
+pre {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-left: 3px solid $terminal-cyan;
+  border-radius: 6px;
+  padding: 1rem;
+  font-family: $font-family-monospace;
+  font-size: 0.9rem;
+  overflow-x: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+    border-radius: 6px 6px 0 0;
+  }
+
+  code {
+    background: transparent;
+    color: #c9d1d9;
+    padding-top: 40px;
+    display: block;
+  }
+}
+
+// Inline code
+code:not(pre code) {
+  background: $code-bg;
+  color: $terminal-cyan;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  font-family: $font-family-monospace;
+  font-size: 0.9em;
+  border: 1px solid #30363d;
+}
+
+// Command prompt styling
+code .op {
+  color: $terminal-green;
+  font-weight: 600;
+}
+
+code .co {
+  color: #8b949e;
+  font-style: italic;
+}
+
+// Links with glow effect
+a {
+  color: $link-color;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $link-hover-color;
+    text-shadow: 0 0 8px rgba(121, 192, 255, 0.5);
+  }
+}
+
+// Callouts with terminal aesthetic
+.callout {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid;
+
+  &.callout-note {
+    border-left-color: $terminal-cyan;
+
+    .callout-icon {
+      color: $terminal-cyan;
+    }
+  }
+
+  &.callout-warning {
+    border-left-color: $terminal-yellow;
+
+    .callout-icon {
+      color: $terminal-yellow;
+    }
+  }
+
+  &.callout-tip {
+    border-left-color: $terminal-green;
+
+    .callout-icon {
+      color: $terminal-green;
+    }
+  }
+
+  .callout-title {
+    font-weight: 600;
+    font-family: $font-family-monospace;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Sidebar navigation
+.sidebar {
+  background: #161b22;
+  border-right: 1px solid #30363d;
+
+  .sidebar-title {
+    color: $terminal-cyan;
+    font-family: $font-family-monospace;
+    font-weight: 600;
+  }
+
+  nav a {
+    color: #8b949e;
+    transition: all 0.2s ease;
+
+    &:hover, &.active {
+      color: $terminal-cyan;
+      background: rgba(88, 166, 255, 0.1);
+      border-left: 2px solid $terminal-cyan;
+    }
+  }
+}
+
+// Table of contents
+.toc-actions a {
+  color: #8b949e;
+
+  &:hover {
+    color: $terminal-cyan;
+  }
+}
+
+// Tables
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  background: #161b22;
+
+  th {
+    background: #0d1117;
+    color: $terminal-cyan;
+    font-family: $font-family-monospace;
+    font-weight: 600;
+    border-bottom: 2px solid #30363d;
+    padding: 0.75rem;
+  }
+
+  td {
+    border-bottom: 1px solid #21262d;
+    padding: 0.75rem;
+  }
+
+  tr:hover {
+    background: rgba(88, 166, 255, 0.05);
+  }
+}
+
+// Blockquotes
+blockquote {
+  border-left: 4px solid $terminal-cyan;
+  background: #161b22;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #8b949e;
+}
+
+// Footer
+.page-footer {
+  border-top: 1px solid #30363d;
+  background: #0d1117;
+  color: #8b949e;
+
+  a {
+    color: $terminal-cyan;
+  }
+}
+
+// Search box
+.aa-Input {
+  background: #161b22;
+  border: 1px solid #30363d;
+  color: $body-color;
+
+  &:focus {
+    border-color: $terminal-cyan;
+    box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+  }
+}
+
+// Buttons
+.btn {
+  font-family: $font-family-monospace;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.3);
+  }
+}
+
+// Navbar
+.navbar {
+  background: #0d1117;
+  border-bottom: 1px solid #30363d;
+  backdrop-filter: blur(10px);
+
+  .navbar-brand {
+    font-family: $font-family-monospace;
+    font-weight: 700;
+    color: $terminal-cyan;
+  }
+
+  .navbar-nav a {
+    color: #8b949e;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $terminal-cyan;
+    }
+  }
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 5px;
+
+  &:hover {
+    background: #484f58;
+  }
+}
+
+// Selection
+::selection {
+  background: rgba(88, 166, 255, 0.3);
+  color: #ffffff;
+}
+
+// Terminal prompt simulation for bash code
+pre.bash::before,
+pre.sh::before {
+  content: '$ ';
+  color: $terminal-green;
+  font-weight: 600;
+}
+
+// Smooth scroll
+html {
+  scroll-behavior: smooth;
+}
+
+// Focus states
+*:focus {
+  outline: 2px solid $terminal-cyan;
+  outline-offset: 2px;
+}
+
+// Loading animation for images
+img {
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+// Card-like sections
+.content-block {
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}

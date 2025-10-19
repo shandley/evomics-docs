@@ -1,87 +1,140 @@
 # Welcome {.unnumbered}
 
-Welcome to **UNIX for Biologists**, a comprehensive guide to mastering the command line for genomic data analysis.
+::: {.content-block}
+```bash
+$ whoami
+biologist
 
-## About This Guide
+$ pwd
+/path/to/mastery
 
-This guide teaches UNIX and command-line skills specifically for biologists and bioinformaticians. Whether you're analyzing RNA-seq data, processing genome assemblies, or working with variant calls, the command line is an essential tool in modern biological research.
+$ ls skills/
+grep  sed  awk  parallel  scripting  genomics  ...
+```
 
-**What makes this guide different:**
+Master the command line for genomic data analysis. From basic navigation to advanced bioinformatics workflows, this guide transforms wet lab biologists into computational powerhouses.
+:::
 
-- **Biology-first examples** - Every concept illustrated with real genomic data
-- **Beginner to expert** - Start with basics, progress to advanced techniques
-- **Practical workflows** - Real bioinformatics pipelines, not toy examples
-- **Modern tools** - Beyond grep/awk to bioawk, seqtk, parallel processing
-- **HPC cluster skills** - Working on remote servers and batch systems
-- **Integrated learning** - Links to interactive exercises on [Evomics Learn](https://learn.evomics.org)
+## What Makes This Different
+
+**Biology-First Approach**
+Every example uses real genomic data. No toy datasets. FASTA, FASTQ, GFF, VCF files from actual research.
+
+**Modern Toolchain**
+Beyond grep and awk. Learn bioawk, seqtk, csvtk, parallel processing, and modern bioinformatics utilities.
+
+**Beginner to Expert**
+Start with pwd and ls. End with automated pipelines processing thousands of samples on HPC clusters.
+
+**Interactive Practice**
+Every concept links to hands-on exercises on [Evomics Learn](https://learn.evomics.org) with instant feedback.
 
 ## Who This Guide Is For
 
-- **Biology graduate students** starting computational work
-- **Wet lab biologists** moving into bioinformatics
-- **Bioinformaticians** looking to level up their command-line skills
-- **Anyone** working with genomic data on UNIX/Linux systems
+```bash
+$ cat audience.txt
+```
 
-No programming experience required, though familiarity with basic biology and genetics is assumed.
+- Biology graduate students starting computational work
+- Wet lab biologists moving into bioinformatics
+- Bioinformaticians leveling up command-line skills
+- Anyone working with genomic data on UNIX/Linux
+
+No programming experience required. Familiarity with basic biology assumed.
 
 ## Learning Path
 
 This guide is organized into progressively advanced sections:
 
-**Foundations** - Learn the essential commands and concepts. Understand file systems, permissions, and basic text manipulation.
+**Foundations**
+Essential commands and concepts. File systems, permissions, basic text manipulation.
 
-**Text Processing Mastery** - Master grep, sed, awk, and modern alternatives. Learn to build powerful command pipelines.
+**Text Processing Mastery**
+grep, sed, awk, and modern alternatives. Build powerful command pipelines.
 
-**Biological Applications** - Work with FASTA, FASTQ, GFF, VCF, and other genomic file formats. Optimize performance for large datasets.
+**Biological Applications**
+FASTA, FASTQ, GFF, VCF formats. Optimize performance for large datasets.
 
-**Advanced Topics** - HPC cluster workflows, bash scripting, automation, and parallel processing.
+**Advanced Topics**
+HPC cluster workflows, bash scripting, automation, parallel processing.
 
-**Reference** - Curated one-liners library and troubleshooting guide.
+**Reference**
+Curated one-liners library and troubleshooting guide.
 
-## Interactive Practice
+## Part of the Evomics Ecosystem
 
-This guide is part of the **Evomics Learning Ecosystem**:
+```bash
+$ tree evomics-learn/
+evomics-learn/
+├── unix-for-biologists/          # This guide
+│   └── comprehensive-reference
+├── interactive-terminal/          # Hands-on practice
+│   └── instant-feedback
+└── r-for-biologists/              # R & tidyverse
+    └── data-analysis
+```
 
-- **[Evomics Learn](https://learn.evomics.org)** - Interactive terminal exercises with instant feedback
+This guide is one component of a multi-modal learning system:
+
+- **[Evomics Learn](https://learn.evomics.org)** - Interactive terminal with instant feedback
 - **This Guide** - Comprehensive reference and advanced techniques
-- **[R for Biologists](https://github.com/shandley/r-tidyverse-for-biologists)** - Complementary R programming course
+- **[R for Biologists](https://github.com/shandley/r-tidyverse-for-biologists)** - R programming course
 
-We recommend alternating between reading this guide and practicing on the interactive platform.
+Alternate between reading and practicing for optimal learning.
 
 ## Prerequisites
 
-- Access to a UNIX/Linux terminal:
-  - **macOS**: Terminal app (already installed)
-  - **Linux**: Terminal/bash (already installed)
-  - **Windows**: WSL (Windows Subsystem for Linux)
-  - **Cloud**: [Evomics Learn](https://learn.evomics.org/terminal) (no installation needed!)
+```bash
+$ which terminal
+```
 
-That's it! Everything else will be covered in this guide.
+Access to a UNIX/Linux terminal:
+
+- **macOS**: Terminal app (pre-installed)
+- **Linux**: Terminal/bash (pre-installed)
+- **Windows**: WSL (Windows Subsystem for Linux)
+- **Cloud**: [Evomics Learn](https://learn.evomics.org/terminal) (no installation)
+
+That's it. Everything else is covered in this guide.
 
 ## How to Use This Guide
 
-**If you're a complete beginner:**
+::: {.callout-note}
+## Complete Beginner
 
 1. Start with [Chapter 1: Foundations](chapters/01-foundations.qmd)
-2. Practice each concept on [Evomics Learn](https://learn.evomics.org/terminal)
+2. Practice on [Evomics Learn](https://learn.evomics.org/terminal)
 3. Work through chapters sequentially
-4. Complete exercises before moving forward
+4. Complete exercises before advancing
+:::
 
-**If you have some experience:**
+::: {.callout-tip}
+## Some Experience
 
-- Jump to specific chapters that interest you
-- Use the [One-Liners Library](chapters/09-oneliners.qmd) as a quick reference
+- Jump to chapters that interest you
+- Use [One-Liners Library](chapters/09-oneliners.qmd) as reference
 - Explore [Power Tools](chapters/04-power-tools.qmd) for modern alternatives
+:::
 
-**If you're advanced:**
+::: {.callout-warning}
+## Advanced User
 
 - Focus on [HPC Clusters](chapters/07-hpc-clusters.qmd) and [Scripting](chapters/08-scripting.qmd)
-- Check out lesser-known tools in [Power Tools](chapters/04-power-tools.qmd)
-- Use [One-Liners](chapters/09-oneliners.qmd) to optimize your workflows
+- Check lesser-known tools in [Power Tools](chapters/04-power-tools.qmd)
+- Optimize workflows with [One-Liners](chapters/09-oneliners.qmd)
+:::
 
 ## Contributing
 
-Found an error? Have a suggestion? Want to contribute a clever one-liner?
+```bash
+$ git clone https://github.com/shandley/unix-for-biologists
+$ cd unix-for-biologists
+$ vim chapters/new-chapter.qmd
+$ git commit -m "Add awesome content"
+$ git push origin main
+```
+
+Found an error? Have a suggestion? Want to contribute?
 
 - [Open an issue](https://github.com/shandley/unix-for-biologists/issues)
 - [Submit a pull request](https://github.com/shandley/unix-for-biologists/pulls)
@@ -89,18 +142,25 @@ Found an error? Have a suggestion? Want to contribute a clever one-liner?
 
 ## License
 
-This guide is licensed under the [MIT License](https://github.com/shandley/unix-for-biologists/blob/main/LICENSE). Free to use and adapt with attribution.
+MIT License. Free to use and adapt with attribution.
+
+[View full license](https://github.com/shandley/unix-for-biologists/blob/main/LICENSE)
 
 ## Acknowledgments
 
-This guide builds on the collective knowledge of the bioinformatics community, including:
+Built on the collective knowledge of the bioinformatics community:
 
 - Stephen Turner's [Bioinformatics One-Liners](https://github.com/stephenturner/oneliners)
-- The many excellent UNIX tutorials and resources cited throughout
+- Excellent UNIX tutorials and resources cited throughout
 - The Evomics Workshop series and community
 
 ---
 
-Ready to begin? Start with [Chapter 1: Foundations →](chapters/01-foundations.qmd)
+```bash
+$ cd chapters/01-foundations.qmd
+# Ready to begin?
+```
 
-Or practice interactively at [Evomics Learn →](https://learn.evomics.org/terminal)
+[Chapter 1: Foundations →](chapters/01-foundations.qmd)
+
+[Practice interactively at Evomics Learn →](https://learn.evomics.org/terminal)

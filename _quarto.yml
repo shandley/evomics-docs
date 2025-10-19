@@ -54,22 +54,25 @@ bibliography: references.bib
 
 format:
   html:
-    theme:
-      light: flatly
-      dark: darkly
+    theme: [default, custom.scss]
+    mainfont: "Inter"
+    monofont: "JetBrains Mono"
     code-copy: true
     code-fold: false
     code-overflow: wrap
     code-block-bg: true
-    code-block-border-left: "#31BAE9"
     toc: true
     toc-depth: 3
     toc-title: "On this page"
     number-sections: true
     number-depth: 3
     link-external-newwindow: true
-    highlight-style: github
-    css: styles.css
+    highlight-style: github-dark
+    smooth-scroll: true
+    code-line-numbers: false
+    code-tools:
+      source: false
+      toggle: false
 
   pdf:
     documentclass: book
