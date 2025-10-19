@@ -1,91 +1,88 @@
 # UNIX for Biologists
 
-A comprehensive guide to mastering the command line for genomic data analysis.
+**Command-Line Genomics from Beginner to Expert**
 
-**Read the guide:** https://shandley.github.io/unix-for-biologists/
+Master the command line for genomic data analysis. From basic navigation to advanced bioinformatics workflows, this guide transforms wet lab biologists into computational powerhouses.
 
-## About
+## Overview
 
-This is a Quarto book teaching UNIX and command-line skills specifically for biologists and bioinformaticians. From basic navigation to advanced scripting, this guide covers everything you need to analyze genomic data on the command line.
-
-## What's Inside
-
-- **Foundations** - Essential UNIX concepts and navigation
-- **Text Processing** - grep, sed, awk, and modern alternatives
-- **Biological Applications** - Working with FASTA, FASTQ, GFF, VCF files
-- **HPC Clusters** - Remote work and job scheduling
-- **Scripting & Automation** - Bash scripting for reproducible workflows
-- **One-Liners Library** - Curated collection of powerful command combinations
-- **Appendices** - Cheat sheets, regex guide, file format reference
+This comprehensive guide teaches UNIX/Linux command-line skills specifically for biologists working with genomic data. Every example uses real biological data formats (FASTA, FASTQ, GFF, VCF) from actual research scenarios.
 
 ## Features
 
-- Biology-focused examples throughout
-- Links to interactive exercises on [Evomics Learn](https://learn.evomics.org)
-- Modern tools (bioawk, seqtk, csvtk, parallel, pigz)
-- Real bioinformatics workflows
-- Beginner to advanced progression
-- Multiple output formats (HTML, PDF)
+- **Biology-First Approach**: All examples use real genomic data, not toy datasets
+- **Modern Toolchain**: Beyond grep and awk - learn bioawk, seqtk, csvtk, parallel processing
+- **Beginner to Expert**: Start with pwd/ls, end with automated HPC pipelines
+- **Interactive Practice**: Links to hands-on exercises on [Evomics Learn](https://learn.evomics.org)
 
-## Part of the Evomics Learning Ecosystem
+## Who This Guide Is For
 
-This guide is part of a multi-modal learning system:
+- Biology graduate students starting computational work
+- Wet lab biologists moving into bioinformatics
+- Bioinformaticians leveling up command-line skills
+- Anyone working with genomic data on UNIX/Linux
 
-- **[UNIX for Biologists](https://github.com/shandley/unix-for-biologists)** (this guide) - Comprehensive written guide
-- **[Evomics Learn](https://learn.evomics.org)** - Interactive terminal exercises with instant feedback
-- **[R for Biologists](https://github.com/shandley/r-tidyverse-for-biologists)** - R and tidyverse course
+No programming experience required. Familiarity with basic biology assumed.
 
-## Building the Book
+## Content Structure
 
-### Prerequisites
+1. **Foundations** - Essential commands and concepts
+2. **Text Processing Mastery** - grep, sed, awk, and modern alternatives
+3. **Biological Applications** - Working with FASTA, FASTQ, GFF, VCF formats
+4. **Advanced Topics** - HPC workflows, bash scripting, automation
+5. **Reference** - One-liners library and troubleshooting guide
 
-- [Quarto](https://quarto.org/docs/get-started/) (version 1.3 or higher)
+## Part of the Evomics Ecosystem
 
-### Local Preview
+This guide is one component of a multi-modal learning system:
+
+- **[Evomics Learn](https://learn.evomics.org)** - Interactive terminal with instant feedback
+- **This Guide** - Comprehensive reference and advanced techniques
+- **[R for Biologists](https://github.com/shandley/r-tidyverse-for-biologists)** - R programming course
+
+## Development
+
+Built with [Fumadocs](https://fumadocs.dev), a modern documentation framework for React/Next.js.
+
+### Setup
 
 ```bash
-quarto preview
+npm install
 ```
 
-This will open a local preview in your browser that updates as you edit.
-
-### Render the Book
+### Run Development Server
 
 ```bash
-quarto render
+npm run dev
 ```
 
-Output will be in the `_site/` directory.
+Open [http://localhost:3000](http://localhost:3000) to see the documentation.
+
+### Build for Production
+
+```bash
+npm run build
+npm run start
+```
 
 ## Contributing
 
-Contributions welcome! Please:
+Found an error? Have a suggestion? Want to contribute?
 
-- Open an issue for bugs or suggestions
-- Submit pull requests for improvements
-- Share clever one-liners for Chapter 9
+- [Open an issue](https://github.com/shandley/unix-for-biologists/issues)
+- [Submit a pull request](https://github.com/shandley/unix-for-biologists/pulls)
+- [Start a discussion](https://github.com/shandley/unix-for-biologists/discussions)
 
 ## License
 
-This work is licensed under the [MIT License](LICENSE). Free to use and adapt with attribution.
+MIT License. Free to use and adapt with attribution.
 
-## Citation
-
-If you use this guide in your research or teaching:
-
-```
-Handley, S. (2025). UNIX for Biologists: Command-Line Genomics from Beginner to Expert.
-https://shandley.github.io/unix-for-biologists/
-```
+[View full license](LICENSE)
 
 ## Acknowledgments
 
-This guide builds on:
+Built on the collective knowledge of the bioinformatics community:
 
 - Stephen Turner's [Bioinformatics One-Liners](https://github.com/stephenturner/oneliners)
-- The broader bioinformatics community's collective knowledge
-- The Evomics Workshop series
-
----
-
-Built with [Quarto](https://quarto.org/) | Part of [Evomics Learn](https://learn.evomics.org)
+- The Evomics Workshop series and community
+- All contributors to this project

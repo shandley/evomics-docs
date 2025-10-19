@@ -2,311 +2,299 @@
 
 ## Project Overview
 
-Comprehensive UNIX/command-line guide for biologists and bioinformaticians. Part of the Evomics Learning Ecosystem with multi-modal teaching approach.
+A comprehensive guide teaching UNIX/Linux command-line skills for biologists working with genomic data. Built with modern web technologies for an excellent learning experience.
 
 ## Tech Stack
 
-- **Quarto** (v1.3+) - Book framework with multi-format output (HTML, PDF, ePub)
-- **Markdown/QMD** - Chapter content format
-- **GitHub Pages** - Hosting for HTML version
-- **YAML** - Configuration (_quarto.yml)
+- **Framework**: [Fumadocs](https://fumadocs.dev) - Modern documentation framework
+- **Runtime**: Next.js 15 with React 19
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Content**: MDX (Markdown + JSX)
+- **Deployment**: Vercel
+- **Icons**: Lucide React
 
-## Architecture
-
-### Multi-Modal Learning System
-
-This guide is one component of an integrated learning ecosystem:
-
-```
-Evomics Learning Ecosystem
-├── Interactive Exercises (learn.evomics.org)
-│   ├── UNIX Terminal (implemented)
-│   ├── R Console via WebR (in development)
-│   └── Future: Python notebooks, specialized tools
-├── Written Guides (GitHub repos)
-│   ├── unix-for-biologists (this repo)
-│   ├── r-tidyverse-for-biologists
-│   └── Future: microbial-ecology, metagenomics, ML, virome, AI-for-bioinformatics
-└── Presentations/Videos (future)
-    └── Slides, screencasts, lectures
-```
-
-### Learning Flow
-
-```
-Read Guide → Practice Exercises → Reference Guide → Apply to Research
-    ↓              ↓                    ↓                 ↓
-  WHY            HOW               WHEN/WHERE         MASTERY
-```
-
-## Key Design Decisions
-
-### Biology-First Approach
-
-- Every concept illustrated with genomic data examples
-- No toy datasets - real FASTA, FASTQ, GFF, VCF files
-- Examples mirror actual research workflows
-- Target audience: wet lab biologists transitioning to computational work
-
-### Progressive Complexity
-
-**Foundations (Ch 1-2):** Essential commands and navigation
-**Text Processing (Ch 3-4):** grep/sed/awk + modern alternatives
-**Biological Applications (Ch 5-6):** Real file formats and performance
-**Advanced (Ch 7-8):** HPC clusters and scripting
-**Reference (Ch 9-10):** One-liners library and troubleshooting
-
-### Integration with evomics-learn
-
-Each chapter cross-links to relevant interactive exercises:
-
-```markdown
-::: {.callout-note}
-## Practice This Concept
-Complete [Exercise 5: File Processing](https://learn.evomics.org/terminal?exercise=file-processing)
-:::
-```
-
-Exercises link back to guide for advanced concepts:
-```typescript
-successMessage: () =>
-  "For advanced techniques, see Guide Chapter 4: Power Tools"
-```
-
-### Modern Tools Focus
-
-Beyond traditional grep/awk, cover:
-- **bioawk** - awk for biological formats
-- **seqtk** - FASTA/FASTQ manipulation
-- **csvtk/miller** - Modern CSV/TSV tools
-- **parallel** - Parallel processing
-- **pigz** - Parallel compression
-- **jq** - JSON parsing for API data
-
-## File Structure
+## Project Structure
 
 ```
 unix-for-biologists/
-├── _quarto.yml              # Quarto configuration
-├── index.qmd                # Book homepage
-├── chapters/                # Main content
-│   ├── 01-foundations.qmd
-│   ├── 02-essential-commands.qmd
-│   ├── 03-text-processing.qmd
-│   ├── 04-power-tools.qmd
-│   ├── 05-biological-formats.qmd
-│   ├── 06-performance.qmd
-│   ├── 07-hpc-clusters.qmd
-│   ├── 08-scripting.qmd
-│   ├── 09-oneliners.qmd
-│   └── 10-troubleshooting.qmd
-├── appendices/              # Reference materials
-│   ├── cheatsheet.qmd
-│   ├── regex-guide.qmd
-│   └── file-formats.qmd
-├── examples/                # Sample data and scripts
-│   ├── data/
-│   └── scripts/
-├── _site/                   # Generated output (gitignored)
-├── references.bib           # Bibliography
-└── styles.css               # Custom styles
+├── app/
+│   ├── (home)/           # Landing page
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── docs/             # Documentation pages
+│   │   ├── [[...slug]]/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   ├── api/search/       # Search API
+│   └── layout.tsx        # Root layout
+├── content/
+│   └── docs/             # MDX documentation files
+│       ├── index.mdx
+│       └── foundations.mdx
+├── lib/
+│   ├── source.ts         # Content source adapter
+│   └── layout.shared.tsx # Shared layout config
+├── examples/             # Example genomic data files
+├── public/               # Static assets
+└── _quarto-backup/       # Original Quarto content (for reference)
 ```
+
+## Content Philosophy
+
+**Biology-First Approach**
+- Every example uses real genomic data formats (FASTA, FASTQ, GFF, VCF)
+- No toy datasets - actual research scenarios
+- Practical workflows that biologists encounter daily
+
+**Progressive Learning**
+1. Foundations - Essential commands and concepts
+2. Text Processing - grep, sed, awk, pipelines
+3. Biological Applications - File format handling
+4. Advanced Topics - HPC, scripting, automation
+5. Reference - One-liners library, troubleshooting
+
+**Multi-Modal Learning Ecosystem**
+- This guide: Comprehensive reference and advanced techniques
+- [Evomics Learn](https://learn.evomics.org): Interactive terminal with instant feedback
+- Cross-linking between reading and practice
 
 ## Content Guidelines
 
 ### Writing Style
+- Clear, concise explanations
+- Code examples for every concept
+- Real-world bioinformatics use cases
+- Links to interactive exercises on Evomics Learn
 
-- Concise and practical
-- Assume biology background, not CS background
-- Explain "why" not just "how"
-- Show expected output for examples
-- Include common pitfalls and troubleshooting
+### MDX Components
 
-### Code Examples
+Use Fumadocs components for enhanced content:
 
-Always include:
+**Callouts** - For important information:
+```mdx
+<Callout type="info" title="Pro Tip">
+Content here
+</Callout>
+
+<Callout type="warn" title="Be Careful">
+Warning content
+</Callout>
+
+<Callout type="error" title="Danger">
+Critical warning
+</Callout>
+```
+
+**Cards** - For navigation and feature highlights:
+```mdx
+<Cards>
+  <Card
+    title="Chapter Title"
+    href="/docs/chapter"
+    description="Brief description"
+  />
+</Cards>
+```
+
+**Code Blocks** - With syntax highlighting:
+````mdx
 ```bash
-# Comment explaining what this does
+# Comment
 command --option argument
 ```
+````
 
-Show output when helpful:
-```bash
-$ grep "^>" sequences.fasta | wc -l
-1234
+### Frontmatter
+
+Each MDX file should have:
+```yaml
+---
+title: Chapter Title
+description: Brief description for SEO and cards
+icon: IconName  # Optional: Lucide icon name
+---
 ```
-
-Use callouts for important points:
-```markdown
-::: {.callout-warning}
-## Dangerous Command
-`rm -rf` is permanent. No undo!
-:::
-
-::: {.callout-tip}
-## Pro Tip
-Use Tab completion to avoid typos
-:::
-
-::: {.callout-note}
-## Practice Exercise
-Try this on [Evomics Learn](https://learn.evomics.org/terminal)
-:::
-```
-
-### Biological Examples
-
-Prefer real genomic scenarios:
-- Counting sequences in FASTA files
-- Filtering VCF by quality score
-- Extracting genes from GFF annotations
-- Processing paired-end FASTQ files
-- Calculating coverage statistics
-- Batch processing multiple samples
-
-Avoid generic examples like "processing customer data" or "analyzing logs"
-
-## Chapter 9: One-Liners Strategy
-
-### Sources
-
-1. **Stephen Turner's collection** - https://github.com/stephenturner/oneliners
-   - Start with this as foundation
-   - Cite properly in chapter
-   - Curate: remove outdated or less useful ones
-
-2. **Novel contributions**
-   - LLM-generated one-liners for modern tools
-   - Community suggestions via GitHub issues
-   - Patterns from real bioinformatics workflows
-
-### Organization
-
-Group by use case:
-- FASTA/FASTQ manipulation
-- GFF/GTF/BED parsing
-- VCF filtering and analysis
-- Quality control
-- Format conversions
-- Parallel processing
-- Statistical summaries
-- Performance optimization
-
-### Format
-
-For each one-liner:
-```markdown
-### Count sequences longer than 500bp
-
-```bash
-bioawk -c fastx '{ if(length($seq) > 500) print ">"$name"\n"$seq }' input.fasta | grep -c "^>"
-```
-
-**What it does:** Filters FASTA to sequences >500bp and counts them
-
-**When to use:** Quality control, pre-filtering for assembly
-
-**Performance:** Fast even on large files (streaming, no sort)
-
-**Variations:**
-- Change 500 to any threshold
-- Use `>` output.fasta to save filtered sequences
-```
-
-## Future Expansion
-
-This repo is designed to be part of a growing ecosystem:
-
-### Planned Guides
-
-- **microbial-ecology-guide** - 16S/18S analysis, diversity metrics, QIIME2 workflows
-- **metagenomics-guide** - Assembly, binning, taxonomic/functional profiling
-- **statistics-for-biologists** - R-based stats complementing r-tidyverse repo
-- **ml-for-genomics** - Machine learning applications in genomics
-- **virome-analysis** - Viral metagenomics and discovery
-- **ai-for-bioinformatics** - Using LLMs and AI tools for analysis
-
-### Expansion Strategy
-
-Each guide follows same pattern:
-1. Separate GitHub repository
-2. Quarto-based book
-3. Integration with evomics-learn interactive exercises
-4. Cross-linking between guides
-5. Unified landing page at learn.evomics.org
-
-### evomics-learn Roadmap
-
-Current: UNIX terminal + basic R console
-Planned:
-- Python/Jupyter notebook environment
-- Specialized analysis tools (alignment viewers, tree visualization)
-- AWS backend for compute-intensive analyses
-- Course progress tracking across all modules
-- Instructor dashboard for workshops
 
 ## Development Workflow
 
-### Adding Content
-
-1. Edit .qmd files in chapters/
-2. Preview locally: `quarto preview`
-3. Commit changes
-4. Push to GitHub (auto-deploys via GitHub Actions)
-
-### Adding Examples
-
-1. Add sample data to examples/data/
-2. Add scripts to examples/scripts/
-3. Reference from chapters with relative paths
-4. Keep data files small (<1MB each)
-
-### Adding Citations
-
-1. Add entry to references.bib
-2. Cite in text: `[@turnerOneliners2014]`
-3. Bibliography auto-generated by Quarto
-
-## Publishing
-
-### GitHub Pages
-
-Automated via `.github/workflows/publish.yml`:
-```yaml
-- name: Render and Publish
-  uses: quarto-dev/quarto-actions/publish@v2
-  with:
-    target: gh-pages
-```
-
-Manual publish:
-```bash
-quarto publish gh-pages
-```
-
-### PDF Generation
+### Local Development
 
 ```bash
-quarto render --to pdf
+npm install          # First time setup
+npm run dev          # Start dev server (http://localhost:3000)
+npm run build        # Production build
+npm run start        # Run production build locally
 ```
 
-Requires tinytex or full LaTeX installation.
+### Content Updates
 
-## Common Issues
+1. Edit MDX files in `content/docs/`
+2. Fumadocs automatically generates types and routes
+3. Hot reload shows changes instantly
 
-**Quarto not found:** Install from https://quarto.org/docs/get-started/
+### Adding New Chapters
 
-**Build fails:** Check YAML syntax in _quarto.yml (indentation matters)
+1. Create new `.mdx` file in `content/docs/`
+2. Add frontmatter with title and description
+3. Write content using MDX components
+4. File structure determines URL structure
 
-**Cross-references broken:** Ensure section headers have unique IDs
+## Deployment
 
-**Images not showing:** Use relative paths from project root
+**Platform**: Vercel
 
-**PDF errors:** Install tinytex: `quarto install tinytex`
+The site automatically deploys when pushing to the main branch:
+- Production: Linked to `main` branch
+- Preview: Automatic for all branches/PRs
+- Domain: To be configured in Vercel dashboard
 
-## Version Information
+**Build Configuration** (handled automatically):
+- Framework Preset: Next.js
+- Build Command: `npm run build`
+- Output Directory: `.next`
+- Install Command: `npm install`
 
-- Quarto: 1.3+
-- Target audience: Biology graduate students, postdocs, bioinformaticians
-- License: MIT (open for educational use)
-- Citation format: Provided in README.md
+## Future Chapters to Add
+
+### Planned Content
+
+1. **Essential Commands** (Chapter 2)
+   - Wildcards and pattern matching
+   - Redirection and pipes
+   - File permissions
+   - Finding files
+
+2. **Text Processing** (Chapter 3)
+   - grep mastery
+   - sed for text transformation
+   - awk for columnar data
+   - Regular expressions
+
+3. **Power Tools** (Chapter 4)
+   - Modern alternatives (fd, ripgrep, bat)
+   - bioawk for biological formats
+   - seqtk, csvtk
+   - Parallel processing
+
+4. **Biological Formats** (Chapter 5)
+   - FASTA/FASTQ manipulation
+   - GFF/GTF parsing
+   - VCF processing
+   - SAM/BAM basics
+
+5. **Performance** (Chapter 6)
+   - Handling large files
+   - Compression strategies
+   - GNU Parallel
+   - Memory-efficient workflows
+
+6. **HPC Clusters** (Chapter 7)
+   - SSH and remote access
+   - Job schedulers (SLURM, PBS)
+   - Resource management
+   - Batch processing
+
+7. **Scripting** (Chapter 8)
+   - Bash scripting fundamentals
+   - Functions and arguments
+   - Error handling
+   - Automation
+
+8. **One-Liners** (Chapter 9)
+   - Curated bioinformatics one-liners
+   - By file format (FASTA, FASTQ, GFF, VCF)
+   - Common analysis patterns
+
+9. **Troubleshooting** (Chapter 10)
+   - Common errors
+   - Debugging strategies
+   - Performance issues
+   - Getting help
+
+### Appendices
+
+- **Cheatsheet** - Quick reference for all commands
+- **Regex Guide** - Regular expressions for biologists
+- **File Formats** - Detailed format specifications
+
+## Example Data
+
+Store example files in `examples/` directory:
+- Small, representative datasets
+- Real biological data when possible
+- Document source and usage rights
+- Reference in code examples
+
+## Integration with Evomics Learn
+
+Link to interactive exercises throughout:
+- Terminal basics
+- Text processing
+- File format manipulation
+- Pipeline building
+
+Pattern:
+```mdx
+<Callout title="Exercise: Topic Name">
+Practice on [Evomics Learn: Exercise Name](https://learn.evomics.org/terminal?exercise=exercise-id)
+
+1. Task description
+2. Another task
+</Callout>
+```
+
+## Search Functionality
+
+Fumadocs includes built-in search:
+- Automatic indexing of all content
+- Keyboard shortcut: ⌘K / Ctrl+K
+- API route: `/api/search/route.ts`
+- No additional configuration needed
+
+## Design Principles
+
+**Modern & Clean**
+- Inspired by constatic-docs aesthetic
+- Professional, not overly playful
+- Focus on readability
+- Generous whitespace
+
+**Accessible**
+- Dark/light theme support
+- Keyboard navigation
+- Screen reader friendly
+- Clear visual hierarchy
+
+**Responsive**
+- Mobile-first approach
+- Touch-friendly navigation
+- Readable code blocks on all devices
+
+## Contributing
+
+When others contribute:
+1. Follow MDX content guidelines
+2. Use real biological examples
+3. Link to practice exercises
+4. Test locally before committing
+5. Keep biology-first focus
+
+## License
+
+MIT License - Free to use and adapt with attribution
+
+## Related Projects
+
+Part of the Evomics learning ecosystem:
+- **Evomics Learn**: Interactive learning platform
+- **R for Biologists**: R/tidyverse course
+- **Future**: Microbial ecology, metagenomics, statistics, ML, virome analysis
+
+## Acknowledgments
+
+Built on the collective knowledge of the bioinformatics community:
+- Stephen Turner's Bioinformatics One-Liners
+- The Evomics Workshop series
+- Fumadocs framework
+- All contributors

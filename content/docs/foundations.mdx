@@ -1,0 +1,554 @@
+---
+title: Foundations
+description: Essential UNIX concepts and commands for bioinformatics
+---
+
+## Why UNIX Matters for Bioinformatics
+
+Modern biology generates massive datasets. A single RNA-seq experiment can produce hundreds of millions of sequencing reads. Whole genome sequencing generates gigabytes of data. Metagenomic studies process thousands of samples simultaneously.
+
+You cannot point-and-click your way through terabytes of genomic data.
+
+The UNIX command line is the universal interface for bioinformatics because it:
+
+- **Scales effortlessly** - Process one file or ten thousand with the same commands
+- **Automates repetitive tasks** - Script once, run on every sample
+- **Works remotely** - Control HPC clusters from anywhere
+- **Chains operations** - Combine simple tools into powerful workflows
+- **Handles any file size** - Process files larger than your computer's memory
+- **Provides precise control** - Exact specifications for every operation
+
+### The Philosophy of UNIX
+
+UNIX was designed around elegant principles that make it perfect for data analysis:
+
+**1. Small, focused tools** - Each command does one thing well
+
+Rather than one giant program that does everything, UNIX provides dozens of specialized tools:
+- `grep` searches for patterns
+- `sort` orders data
+- `cut` extracts columns
+- `wc` counts lines/words
+
+**2. Tools work together** - Combine commands with pipes
+
+The real power comes from chaining commands:
+
+```bash
+# Count unique gene names in a GFF file
+grep "gene" annotations.gff | cut -f9 | sort | uniq | wc -l
+```
+
+This one line:
+- Finds all gene annotations
+- Extracts the 9th column (attributes)
+- Sorts them alphabetically
+- Filters to unique entries
+- Counts them
+
+**3. Text-based interface** - Everything is readable
+
+Genomic data formats (FASTA, FASTQ, GFF, VCF) are plain text files. You can:
+- View them with any text viewer
+- Process them with any text tool
+- Debug problems by reading the file
+- Transfer them between systems easily
+
+**4. Composability** - Build complex workflows from simple pieces
+
+Start simple:
+```bash
+cat sequences.fasta
+```
+
+Add filtering:
+```bash
+cat sequences.fasta | grep "^>"
+```
+
+Add counting:
+```bash
+cat sequences.fasta | grep "^>" | wc -l
+```
+
+Add sorting by length (advanced, we'll get there):
+```bash
+bioawk -c fastx '{ print length($seq), $name }' sequences.fasta | sort -rn | head -10
+```
+
+## The Terminal Environment
+
+### What is a Terminal?
+
+A **terminal** (also called **shell**, **console**, or **command line**) is a text-based interface for controlling your computer.
+
+Instead of clicking icons, you type commands:
+
+```bash
+$ ls
+data  results  scripts
+```
+
+The `$` is the **prompt** showing the shell is ready for input. You type `ls` (list) and press Enter. The shell executes the command and displays output.
+
+### Anatomy of a Command
+
+```bash
+grep -i "ribosomal" annotations.gff
+```
+
+Breaking this down:
+
+- **`grep`** - The command (program to run)
+- **`-i`** - An option/flag (case-insensitive search)
+- **`"ribosomal"`** - An argument (what to search for)
+- **`annotations.gff`** - Another argument (file to search in)
+
+**General syntax:**
+```bash
+command -options argument1 argument2 ...
+```
+
+### Essential Keyboard Shortcuts
+
+These shortcuts save enormous time:
+
+**Command editing:**
+- `Ctrl+A` - Jump to beginning of line
+- `Ctrl+E` - Jump to end of line
+- `Ctrl+U` - Delete from cursor to beginning
+- `Ctrl+K` - Delete from cursor to end
+- `Ctrl+W` - Delete word before cursor
+
+**Command history:**
+- `↑` (Up arrow) - Previous command
+- `↓` (Down arrow) - Next command
+- `Ctrl+R` - Search command history (type to search, Enter to execute)
+
+**Tab completion:**
+- Press `Tab` after typing a few letters to autocomplete
+- Press `Tab` twice to see all possibilities
+
+Example:
+```bash
+$ cd gen<Tab>
+$ cd genomics_project/    # Autocompleted!
+```
+
+**Other:**
+- `Ctrl+C` - Cancel current command
+- `Ctrl+D` - Exit shell (logout)
+- `Ctrl+L` - Clear screen (same as `clear` command)
+
+<Callout type="info" title="Practice: Tab Completion">
+Tab completion is your best friend. It:
+- Saves typing time
+- Prevents spelling errors
+- Shows what files/directories exist
+
+Always use Tab instead of typing full filenames!
+</Callout>
+
+### Getting Help
+
+Every UNIX command has built-in documentation:
+
+**Manual pages:**
+```bash
+man grep
+```
+
+Shows the full manual for `grep`. Navigate with:
+- `Space` - Next page
+- `b` - Previous page
+- `/pattern` - Search for pattern
+- `q` - Quit
+
+**Quick help:**
+```bash
+grep --help
+```
+
+Shows brief usage summary.
+
+**Which command to use:**
+```bash
+apropos "search files"
+```
+
+Finds commands related to "search files".
+
+<Callout title="Reading Manual Pages">
+Manual pages follow a standard format:
+
+- **NAME** - Command name and brief description
+- **SYNOPSIS** - Usage syntax
+- **DESCRIPTION** - Detailed explanation
+- **OPTIONS** - All available flags
+- **EXAMPLES** - Usage examples
+- **SEE ALSO** - Related commands
+
+Focus on SYNOPSIS and EXAMPLES first.
+</Callout>
+
+## The File System
+
+### Directory Structure
+
+UNIX organizes files in a tree structure:
+
+```
+/                           (root)
+├── home/                   (user home directories)
+│   └── user/
+│       ├── genomics_project/
+│       │   ├── data/
+│       │   │   ├── sequences.fasta
+│       │   │   └── reads.fastq
+│       │   ├── results/
+│       │   └── scripts/
+│       └── documents/
+├── usr/                    (programs and libraries)
+│   ├── bin/                (user commands)
+│   └── local/
+└── tmp/                    (temporary files)
+```
+
+### Absolute vs Relative Paths
+
+**Absolute path** - Full path from root (`/`):
+```bash
+/home/user/genomics_project/data/sequences.fasta
+```
+
+Always works, regardless of your current location.
+
+**Relative path** - Path from current directory:
+```bash
+data/sequences.fasta
+```
+
+Only works if you're in `/home/user/genomics_project/`.
+
+### Special Directory Symbols
+
+- **`.`** (dot) - Current directory
+- **`..`** (dot dot) - Parent directory
+- **`~`** (tilde) - Your home directory
+- **`-`** (dash) - Previous directory
+
+Examples:
+```bash
+ls .                        # List current directory
+cd ..                       # Go up one level
+cd ~                        # Go to home directory
+cd -                        # Go to previous directory
+```
+
+Relative paths using `..`:
+```bash
+$ pwd
+/home/user/genomics_project/data
+
+$ cd ../results            # Up one, then into results
+$ pwd
+/home/user/genomics_project/results
+```
+
+<Callout type="warn" title="Case Sensitivity">
+UNIX is **case-sensitive**!
+
+- `sequences.fasta` ≠ `Sequences.fasta` ≠ `SEQUENCES.FASTA`
+- `Data/` ≠ `data/`
+
+This is different from Windows/macOS file systems. Be precise!
+</Callout>
+
+## Essential Navigation Commands
+
+### `pwd` - Print Working Directory
+
+Shows where you are:
+
+```bash
+$ pwd
+/home/user/genomics_project
+```
+
+Use this frequently to stay oriented, especially when using relative paths.
+
+### `ls` - List Files
+
+Basic usage:
+```bash
+$ ls
+data  results  scripts
+```
+
+Common options:
+```bash
+ls -l                      # Long format (details)
+ls -a                      # All files (including hidden)
+ls -lh                     # Human-readable file sizes
+ls -lt                     # Sort by modification time
+ls -lS                     # Sort by size
+ls -R                      # Recursive (show subdirectories)
+```
+
+Combined options:
+```bash
+ls -lah                    # Long, all, human-readable
+```
+
+Example output of `ls -lh`:
+```bash
+total 2.5G
+drwxr-xr-x 2 user group 4.0K Oct 19 10:30 data
+-rw-r--r-- 1 user group 1.2G Oct 19 09:15 sequences.fasta
+-rw-r--r-- 1 user group 850M Oct 19 08:45 reads.fastq.gz
+```
+
+Reading this:
+- `d` = directory, `-` = file
+- `rwxr-xr-x` = permissions (more later)
+- `user group` = owner and group
+- `1.2G` = file size
+- `Oct 19 09:15` = modification time
+- `sequences.fasta` = filename
+
+### `cd` - Change Directory
+
+Navigate to a directory:
+
+```bash
+cd genomics_project        # Relative path
+cd /home/user/data         # Absolute path
+cd ~                       # Go home
+cd ..                      # Go up one level
+cd -                       # Go to previous directory
+```
+
+No output means success! Check with `pwd` if unsure.
+
+<Callout type="info" title="Staying Oriented">
+Lost in the file system? Use this pattern:
+
+```bash
+pwd                        # Where am I?
+ls                         # What's here?
+cd ..                      # Go up
+pwd                        # Check again
+```
+</Callout>
+
+## Viewing File Contents
+
+### `cat` - Concatenate
+
+Display entire file:
+
+```bash
+cat sequences.fasta
+```
+
+Useful for small files. For large files, it will scroll too fast to read.
+
+Concatenate multiple files:
+```bash
+cat sample1.txt sample2.txt sample3.txt > combined.txt
+```
+
+### `head` - First Lines
+
+View beginning of file:
+
+```bash
+head sequences.fasta       # First 10 lines (default)
+head -n 20 sequences.fasta # First 20 lines
+head -n 3 *.fasta          # First 3 lines of each FASTA
+```
+
+### `tail` - Last Lines
+
+View end of file:
+
+```bash
+tail sequences.fasta       # Last 10 lines
+tail -n 50 sequences.fasta # Last 50 lines
+tail -f logfile.txt        # Follow file (show new lines as added)
+```
+
+The `-f` option is crucial for monitoring running analyses:
+```bash
+tail -f analysis.log       # Watch analysis progress in real-time
+```
+
+### `less` - Paginated Viewer
+
+View file one screen at a time:
+
+```bash
+less sequences.fasta
+```
+
+Navigation in `less`:
+- `Space` - Next page
+- `b` - Previous page
+- `/pattern` - Search forward
+- `?pattern` - Search backward
+- `n` - Next match
+- `N` - Previous match
+- `g` - Go to beginning
+- `G` - Go to end
+- `q` - Quit
+
+`less` is better than `cat` for large files because it doesn't load the entire file into memory.
+
+### `wc` - Word Count
+
+Count lines, words, and characters:
+
+```bash
+$ wc sequences.fasta
+  1000  1000  50000 sequences.fasta
+```
+
+Output: `lines words bytes filename`
+
+Common uses:
+```bash
+wc -l sequences.fasta      # Just count lines
+wc -c sequences.fasta      # Just count bytes
+wc -l *.fastq              # Count lines in all FASTQ files
+```
+
+For FASTQ files (4 lines per read):
+```bash
+$ wc -l reads.fastq
+8000000 reads.fastq
+
+# Number of reads = lines / 4
+$ echo $((8000000 / 4))
+2000000
+```
+
+<Callout type="info" title="Counting Sequences in FASTA">
+FASTA headers start with `>`. Count them:
+
+```bash
+grep -c "^>" sequences.fasta
+```
+
+This is more accurate than `wc -l` for FASTA (sequences span multiple lines).
+</Callout>
+
+## Creating and Manipulating Files
+
+### `touch` - Create Empty File
+
+```bash
+touch newfile.txt
+touch analysis1.sh analysis2.sh analysis3.sh
+```
+
+Also updates modification time of existing files.
+
+### `mkdir` - Make Directory
+
+```bash
+mkdir results
+mkdir -p project/data/raw          # Create nested directories
+mkdir analysis_{1,2,3}             # Create multiple: analysis_1, analysis_2, analysis_3
+```
+
+The `-p` option creates parent directories as needed and doesn't error if directory exists.
+
+### `cp` - Copy
+
+```bash
+cp source.txt destination.txt                    # Copy file
+cp source.txt /path/to/directory/                # Copy to directory
+cp -r directory1 directory2                      # Copy directory (recursive)
+cp *.fasta backup/                               # Copy all FASTA files
+```
+
+<Callout type="warn" title="Copying Large Files">
+For large genomic files, use `cp -v` (verbose) to see progress:
+
+```bash
+cp -v large_genome.fasta backup/
+```
+
+Or use `rsync` for better progress indication:
+
+```bash
+rsync -ah --progress large_genome.fasta backup/
+```
+</Callout>
+
+### `mv` - Move (Rename)
+
+```bash
+mv oldname.txt newname.txt                       # Rename
+mv file.txt /path/to/directory/                  # Move
+mv *.fastq raw_data/                             # Move all FASTQ files
+```
+
+### `rm` - Remove (Delete)
+
+```bash
+rm file.txt                                      # Delete file
+rm -r directory/                                 # Delete directory (recursive)
+rm *.tmp                                         # Delete all .tmp files
+```
+
+<Callout type="error" title="Dangerous Command!">
+`rm` is **permanent**. There is no Trash/Recycle Bin. Deleted files are gone forever.
+
+**Never run:**
+```bash
+rm -rf /                    # DELETES EVERYTHING
+rm -rf *                    # Deletes all files (be very careful!)
+```
+
+**Safe practices:**
+- Use `ls` pattern first to verify what you'll delete
+- Use `rm -i` for interactive confirmation
+- Keep backups of important data
+</Callout>
+
+## Practice Exercises
+
+<Callout title="Exercise 1: Navigation">
+Practice on [Evomics Learn: Terminal Basics](https://learn.evomics.org/terminal?exercise=terminal-basics)
+
+1. Find your current directory with `pwd`
+2. List files in current directory
+3. Change to your home directory
+4. List all files including hidden ones
+</Callout>
+
+<Callout title="Exercise 2: Viewing Files">
+Practice on [Evomics Learn: Text Analysis Basics](https://learn.evomics.org/terminal?exercise=text-analysis-basics)
+
+1. View first 10 lines of a FASTA file
+2. Count total lines in the file
+3. Search for all sequence headers
+4. Count how many sequences are in the file
+</Callout>
+
+## Key Takeaways
+
+- UNIX is essential for bioinformatics due to scalability and automation
+- The shell is a text-based interface controlled by typed commands
+- File system is a tree structure with absolute and relative paths
+- Tab completion and keyboard shortcuts dramatically improve efficiency
+- Navigate with `pwd`, `ls`, and `cd`
+- View files with `cat`, `head`, `tail`, and `less`
+- Create and manipulate with `touch`, `mkdir`, `cp`, `mv`, `rm`
+- `man command` shows full documentation
+- Practice makes perfect - use the interactive exercises!
+
+## Next Steps
+
+Now that you understand the basics, practice on [Evomics Learn](https://learn.evomics.org/terminal) to reinforce these concepts.

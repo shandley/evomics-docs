@@ -1,0 +1,33 @@
+{
+  "name": "unix-for-biologists",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Command-Line Genomics from Beginner to Expert",
+  "author": "Scott Handley",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shandley/unix-for-biologists"
+  },
+  "scripts": {
+    "build": "next build",
+    "dev": "next dev --turbo",
+    "start": "next start",
+    "postinstall": "fumadocs-mdx"
+  },
+  "dependencies": {
+    "next": "15.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "lucide-react": "^0.544.0",
+    "fumadocs-ui": "15.8.5",
+    "fumadocs-core": "15.8.5",
+    "fumadocs-mdx": "12.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "24.6.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "typescript": "^5.9.3",
+    "@types/mdx": "^2.0.13"
+  }
+}
