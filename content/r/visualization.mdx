@@ -1,0 +1,314 @@
+---
+title: "Visualization"
+description: "Create publication-quality plots with ggplot2"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Data Visualization with ggplot2
+
+Create publication-quality plots for biological data.
+
+<Callout type="info" title="Interactive Learning">
+For detailed tutorials and exercises, see [Lesson 5](https://github.com/shandley/R-tutorials/blob/main/lesson05_data_visualization.Rmd) of the full course.
+</Callout>
+
+## Grammar of Graphics
+
+ggplot2 uses a layered approach:
+
+1. **Data**: Your dataset
+2. **Aesthetics** (`aes`): Map variables to visual properties
+3. **Geoms**: Geometric objects (points, lines, bars)
+4. **Themes**: Overall appearance
+
+## Basic Template
+
+```r
+ggplot(data, aes(x = variable1, y = variable2)) +
+  geom_*() +
+  labs(title = "Title", x = "X Label", y = "Y Label")
+```
+
+## Common Plot Types
+
+### Histogram
+
+Distribution of a single continuous variable:
+
+```r
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 30, fill = "steelblue") +
+  labs(title = "Distribution of Body Mass",
+       x = "Body Mass (g)",
+       y = "Count")
+```
+
+### Boxplot
+
+Compare distributions across groups:
+
+```r
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_boxplot() +
+  labs(title = "Body Mass by Species",
+       x = "Species",
+       y = "Body Mass (g)") +
+  theme(legend.position = "none")
+```
+
+### Scatterplot
+
+Relationship between two continuous variables:
+
+```r
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point(size = 2, alpha = 0.7) +
+  labs(title = "Flipper Length vs Body Mass",
+       x = "Flipper Length (mm)",
+       y = "Body Mass (g)",
+       color = "Species")
+```
+
+### Bar Plot
+
+Counts or summary statistics by category:
+
+```r
+# Count plot
+ggplot(penguins, aes(x = species, fill = species)) +
+  geom_bar() +
+  labs(title = "Number of Penguins by Species",
+       x = "Species",
+       y = "Count")
+
+# Summary statistic
+penguins %>%
+  group_by(species) %>%
+  summarise(mean_mass = mean(body_mass_g, na.rm = TRUE)) %>%
+  ggplot(aes(x = species, y = mean_mass, fill = species)) +
+  geom_col() +
+  labs(title = "Mean Body Mass by Species",
+       y = "Mean Body Mass (g)")
+```
+
+### Line Plot
+
+Time series or ordered data:
+
+```r
+# Example with growth curve data
+growth_data <- tibble(
+  time_hours = 0:24,
+  od600 = c(0.05, 0.06, 0.08, 0.12, 0.18, 0.28, 0.42, 0.58,
+            0.72, 0.84, 0.92, 0.96, 0.98, 0.99, 1.00, 1.00,
+            1.01, 1.01, 1.02, 1.02, 1.02, 1.03, 1.03, 1.03, 1.03)
+)
+
+ggplot(growth_data, aes(x = time_hours, y = od600)) +
+  geom_line(color = "steelblue", linewidth = 1) +
+  geom_point(color = "steelblue", size = 2) +
+  labs(title = "Bacterial Growth Curve",
+       x = "Time (hours)",
+       y = "OD600")
+```
+
+## Aesthetics (aes)
+
+Map data to visual properties:
+
+- `x`, `y` - position
+- `color` - point/line color
+- `fill` - fill color for shapes
+- `size` - point/line size
+- `alpha` - transparency (0-1)
+- `shape` - point shape
+- `linetype` - line style
+
+```r
+# Color by category
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = species)) +
+  geom_point()
+
+# Size by continuous variable
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, size = body_mass_g)) +
+  geom_point(alpha = 0.6)
+
+# Multiple aesthetics
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm,
+                     color = species, shape = sex)) +
+  geom_point(size = 2)
+```
+
+## Faceting
+
+Create small multiples:
+
+```r
+# Facet by one variable
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 20, fill = "steelblue") +
+  facet_wrap(~species)
+
+# Facet by two variables
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point() +
+  facet_grid(sex ~ species)
+```
+
+## Themes
+
+Control overall appearance:
+
+```r
+# Built-in themes
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  theme_minimal()  # Clean, minimal theme
+
+# Other themes: theme_bw(), theme_classic(), theme_dark()
+
+# Customize theme elements
+ggplot(penguins, aes(x = species, y = body_mass_g)) +
+  geom_boxplot() +
+  theme_minimal() +
+  theme(
+    legend.position = "bottom",
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = element_text(face = "bold")
+  )
+```
+
+## Colors
+
+### Manual Colors
+
+```r
+# Custom colors
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("Adelie" = "#FF6B35",
+                                "Chinstrap" = "#004E89",
+                                "Gentoo" = "#F7B801"))
+```
+
+### Color Palettes
+
+```r
+# ColorBrewer palettes
+ggplot(penguins, aes(x = species, fill = species)) +
+  geom_bar() +
+  scale_fill_brewer(palette = "Set2")
+
+# Viridis (colorblind-friendly)
+ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = body_mass_g)) +
+  geom_point() +
+  scale_color_viridis_c()
+```
+
+## Statistical Layers
+
+Add statistical summaries:
+
+```r
+# Add trend line
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm")  # Linear model
+
+# Add mean with error bars
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    mean = mean(body_mass_g, na.rm = TRUE),
+    se = sd(body_mass_g, na.rm = TRUE) / sqrt(n())
+  ) %>%
+  ggplot(aes(x = species, y = mean)) +
+  geom_col(fill = "steelblue") +
+  geom_errorbar(aes(ymin = mean - se, ymax = mean + se), width = 0.2)
+```
+
+## Saving Plots
+
+```r
+# Save last plot
+ggsave("my_plot.png", width = 8, height = 6, dpi = 300)
+
+# Save specific plot
+p <- ggplot(penguins, aes(x = species, fill = species)) +
+  geom_bar()
+
+ggsave("species_counts.pdf", plot = p, width = 6, height = 4)
+```
+
+## Biological Example: qPCR Results
+
+```r
+# qPCR data
+qpcr_data <- tibble(
+  gene = rep(c("GAPDH", "ActinB", "Gene_X", "Gene_Y"), each = 3),
+  replicate = rep(1:3, 4),
+  ct_value = c(18.2, 18.5, 18.3,  # GAPDH
+               19.1, 19.3, 18.9,  # ActinB
+               24.5, 24.8, 24.3,  # Gene_X
+               22.1, 22.4, 21.9)  # Gene_Y
+)
+
+# Calculate mean and SE
+qpcr_summary <- qpcr_data %>%
+  group_by(gene) %>%
+  summarise(
+    mean_ct = mean(ct_value),
+    se = sd(ct_value) / sqrt(n())
+  )
+
+# Plot
+ggplot(qpcr_summary, aes(x = gene, y = mean_ct, fill = gene)) +
+  geom_col() +
+  geom_errorbar(aes(ymin = mean_ct - se, ymax = mean_ct + se), width = 0.2) +
+  labs(title = "qPCR Ct Values",
+       x = "Gene",
+       y = "Mean Ct Value",
+       fill = "Gene") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Quick Reference
+
+```r
+# Histogram
+geom_histogram(bins = 30)
+
+# Boxplot
+geom_boxplot()
+
+# Scatterplot
+geom_point()
+
+# Line plot
+geom_line()
+
+# Bar plot (counts)
+geom_bar()
+
+# Bar plot (values)
+geom_col()
+
+# Smooth/trend
+geom_smooth()
+
+# Error bars
+geom_errorbar(aes(ymin = , ymax = ))
+```
+
+## Next Steps
+
+- [Statistical Testing](/r/statistical-testing) - Add p-values to plots
+- [Full Course Lesson 5](https://github.com/shandley/R-tutorials/blob/main/lesson05_data_visualization.Rmd) - Comprehensive tutorial
+
+## Resources
+
+- [ggplot2 cheatsheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf)
+- [ggplot2 documentation](https://ggplot2.tidyverse.org/)
+- [R Graph Gallery](https://r-graph-gallery.com/) - Plot examples

@@ -1,0 +1,407 @@
+---
+title: "Data Manipulation"
+description: "Transform and filter data with dplyr for biological analysis"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# Data Manipulation with dplyr
+
+Essential dplyr functions for transforming biological data.
+
+<Callout type="info" title="Interactive Learning">
+For hands-on exercises, see [Lesson 3](https://github.com/shandley/R-tutorials/blob/main/lesson03_data_transformation.Rmd) and [Lesson 4](https://github.com/shandley/R-tutorials/blob/main/lesson04_grouping_summarizing.Rmd) of the full course.
+</Callout>
+
+## The Pipe Operator
+
+The pipe `%>%` (or `|>`) passes results from one function to the next:
+
+```r
+# Without pipe (hard to read)
+head(filter(penguins, species == "Adelie"), 5)
+
+# With pipe (reads left to right)
+penguins %>%
+  filter(species == "Adelie") %>%
+  head(5)
+```
+
+**Keyboard shortcut**: Ctrl+Shift+M (Windows) or Cmd+Shift+M (Mac)
+
+Read `%>%` as "and then".
+
+## filter(): Keep Rows
+
+Subset rows based on conditions.
+
+### Basic Filtering
+
+```r
+# Single condition
+penguins %>%
+  filter(species == "Adelie")
+
+# Numeric comparison
+penguins %>%
+  filter(body_mass_g > 5000)
+
+# Multiple values
+penguins %>%
+  filter(species %in% c("Adelie", "Chinstrap"))
+```
+
+### Comparison Operators
+
+- `==` equal
+- `!=` not equal
+- `>` greater than
+- `<` less than
+- `>=` greater than or equal
+- `<=` less than or equal
+
+### Combining Conditions
+
+```r
+# AND (&)
+penguins %>%
+  filter(species == "Adelie" & sex == "male")
+
+# OR (|)
+penguins %>%
+  filter(species == "Adelie" | species == "Gentoo")
+
+# Multiple conditions (comma = AND)
+penguins %>%
+  filter(
+    species == "Gentoo",
+    island == "Biscoe",
+    body_mass_g > 5500
+  )
+```
+
+### Remove Missing Values
+
+```r
+# Filter out NAs
+penguins %>%
+  filter(!is.na(sex))
+
+# ! means NOT
+```
+
+## select(): Choose Columns
+
+Pick which columns to keep (or remove).
+
+### Basic Selection
+
+```r
+# Keep specific columns
+penguins %>%
+  select(species, body_mass_g)
+
+# Keep column range
+penguins %>%
+  select(species:island)
+```
+
+### Helper Functions
+
+```r
+# Columns ending with pattern
+penguins %>%
+  select(species, ends_with("mm"))
+
+# Columns containing pattern
+penguins %>%
+  select(contains("length"))
+
+# Numeric columns only
+penguins %>%
+  select(where(is.numeric))
+
+# Columns starting with pattern
+penguins %>%
+  select(starts_with("bill"))
+```
+
+### Remove Columns
+
+```r
+# Remove single column
+penguins %>%
+  select(-year)
+
+# Remove multiple columns
+penguins %>%
+  select(-island, -year)
+```
+
+### Reorder Columns
+
+```r
+# Put specific column first
+penguins %>%
+  select(body_mass_g, everything())
+```
+
+## mutate(): Create Columns
+
+Add new columns or modify existing ones.
+
+### Basic Mutations
+
+```r
+# Single new column
+penguins %>%
+  mutate(body_mass_kg = body_mass_g / 1000)
+
+# Multiple new columns
+penguins %>%
+  mutate(
+    body_mass_kg = body_mass_g / 1000,
+    flipper_length_cm = flipper_length_mm / 10,
+    bill_ratio = bill_length_mm / bill_depth_mm
+  )
+```
+
+### Conditional Mutations
+
+```r
+# if_else() for two outcomes
+penguins %>%
+  mutate(size = if_else(body_mass_g > 4500, "large", "small"))
+
+# case_when() for multiple outcomes
+penguins %>%
+  mutate(size_class = case_when(
+    body_mass_g < 3500 ~ "small",
+    body_mass_g < 4500 ~ "medium",
+    body_mass_g >= 4500 ~ "large",
+    TRUE ~ "unknown"  # for NAs
+  ))
+```
+
+## arrange(): Sort Rows
+
+Sort data by one or more columns.
+
+```r
+# Sort ascending
+penguins %>%
+  arrange(body_mass_g)
+
+# Sort descending
+penguins %>%
+  arrange(desc(body_mass_g))
+
+# Sort by multiple columns
+penguins %>%
+  arrange(species, desc(body_mass_g))
+```
+
+## group_by() + summarise()
+
+Calculate statistics by groups.
+
+### Basic Grouping
+
+```r
+# Mean by species
+penguins %>%
+  group_by(species) %>%
+  summarise(mean_mass = mean(body_mass_g, na.rm = TRUE))
+
+# Multiple statistics
+penguins %>%
+  group_by(species) %>%
+  summarise(
+    n = n(),
+    mean_mass = mean(body_mass_g, na.rm = TRUE),
+    sd_mass = sd(body_mass_g, na.rm = TRUE),
+    min_mass = min(body_mass_g, na.rm = TRUE),
+    max_mass = max(body_mass_g, na.rm = TRUE)
+  )
+```
+
+### Multiple Grouping Variables
+
+```r
+# Group by species AND sex
+penguins %>%
+  group_by(species, sex) %>%
+  summarise(
+    n = n(),
+    mean_flipper = mean(flipper_length_mm, na.rm = TRUE)
+  )
+```
+
+### Useful Summary Functions
+
+- `n()` - count rows
+- `mean()` - average
+- `median()` - median
+- `sd()` - standard deviation
+- `min()`, `max()` - range
+- `sum()` - total
+- `first()`, `last()` - first/last value
+
+## count()
+
+Quick way to count occurrences:
+
+```r
+# Count by category
+penguins %>%
+  count(species)
+
+# Count by multiple categories
+penguins %>%
+  count(species, island)
+
+# Sort by count
+penguins %>%
+  count(species, sort = TRUE)
+```
+
+## Chaining Operations
+
+Combine functions to answer complex questions:
+
+### Example 1: Filter + Select + Arrange
+
+```r
+# Find 5 heaviest male Adelie penguins
+penguins %>%
+  filter(species == "Adelie", sex == "male") %>%
+  arrange(desc(body_mass_g)) %>%
+  select(island, bill_length_mm, body_mass_g) %>%
+  head(5)
+```
+
+### Example 2: Filter + Mutate + Group + Summarise
+
+```r
+# Compare bill ratios between species
+penguins %>%
+  filter(!is.na(bill_length_mm), !is.na(bill_depth_mm)) %>%
+  mutate(bill_ratio = bill_length_mm / bill_depth_mm) %>%
+  group_by(species) %>%
+  summarise(
+    n = n(),
+    mean_ratio = mean(bill_ratio),
+    sd_ratio = sd(bill_ratio)
+  )
+```
+
+## Biological Example: Infection Study
+
+```r
+# Create experimental data
+infection_data <- tibble(
+  mouse_id = 1:20,
+  treatment = rep(c("control", "vaccine"), each = 10),
+  bacterial_load = c(
+    8.5e6, 9.2e6, 7.8e6, 8.9e6, 9.5e6, 8.1e6, 9.0e6, 8.4e6, 9.1e6, 8.7e6,
+    2.1e6, 1.8e6, 2.5e6, 1.9e6, 2.2e6, 2.0e6, 2.3e6, 1.7e6, 2.4e6, 2.1e6
+  ),
+  weight_loss_pct = c(12, 15, 13, 14, 16, 11, 15, 13, 14, 15,
+                      3, 2, 4, 3, 5, 2, 4, 3, 4, 3)
+)
+
+# Analysis pipeline
+infection_data %>%
+  mutate(
+    log_load = log10(bacterial_load),
+    severity = case_when(
+      weight_loss_pct < 5 ~ "mild",
+      weight_loss_pct < 10 ~ "moderate",
+      weight_loss_pct >= 10 ~ "severe"
+    )
+  ) %>%
+  group_by(treatment, severity) %>%
+  summarise(
+    n = n(),
+    mean_load = mean(log_load),
+    sd_load = sd(log_load)
+  )
+```
+
+## Common Patterns
+
+### Calculate group statistics
+
+```r
+data %>%
+  group_by(category) %>%
+  summarise(mean = mean(value, na.rm = TRUE))
+```
+
+### Filter to top N per group
+
+```r
+data %>%
+  group_by(species) %>%
+  slice_max(body_mass_g, n = 5)
+```
+
+### Add group statistics to original data
+
+```r
+data %>%
+  group_by(species) %>%
+  mutate(species_mean = mean(body_mass_g, na.rm = TRUE))
+```
+
+### Count and calculate percentage
+
+```r
+data %>%
+  count(category) %>%
+  mutate(pct = n / sum(n) * 100)
+```
+
+## Common Mistakes
+
+### Forgetting assignment
+
+```r
+# Doesn't save!
+penguins %>% filter(species == "Adelie")
+
+# Saves result
+adelie <- penguins %>% filter(species == "Adelie")
+```
+
+### Using = instead of ==
+
+```r
+# Wrong
+filter(species = "Adelie")  # Error!
+
+# Right
+filter(species == "Adelie")
+```
+
+### Forgetting na.rm = TRUE
+
+```r
+# Returns NA if any NA present
+mean(penguins$body_mass_g)
+
+# Removes NAs first
+mean(penguins$body_mass_g, na.rm = TRUE)
+```
+
+## Next Steps
+
+- [Data Reshaping](/r/data-reshaping) - Pivot data with tidyr
+- [Visualization](/r/visualization) - Plot results with ggplot2
+- [Statistical Testing](/r/statistical-testing) - Hypothesis tests with rstatix
+
+## Resources
+
+- [dplyr cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf)
+- [R for Data Science - Data Transformation](https://r4ds.hadley.nz/data-transform.html)
+- [dplyr documentation](https://dplyr.tidyverse.org/)

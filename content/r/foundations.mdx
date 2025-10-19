@@ -1,0 +1,410 @@
+---
+title: "Foundations"
+description: "R basics, data types, and tidyverse introduction for biological data analysis"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# R Foundations
+
+Essential R concepts and tidyverse basics for biological data analysis.
+
+<Callout type="info" title="Interactive Learning">
+For hands-on exercises and detailed tutorials, see [Lesson 1](https://github.com/shandley/R-tutorials/blob/main/lesson01_intro_to_R_and_RMarkdown.Rmd) and [Lesson 2](https://github.com/shandley/R-tutorials/blob/main/lesson02_data_import_exploration.Rmd) of the full course.
+</Callout>
+
+## R Basics
+
+### R as a Calculator
+
+R performs standard mathematical operations:
+
+```r
+# Basic arithmetic
+5 + 3                # Addition
+4 * 7                # Multiplication
+20 / 4               # Division
+10^-6                # Exponentiation (1 micromolar in molar)
+```
+
+### Assignment Operator
+
+Use `<-` to assign values to variables:
+
+```r
+# Store values
+sample_concentration <- 2.5
+dilution_factor <- 10
+
+# Use in calculations
+final_concentration <- sample_concentration / dilution_factor
+final_concentration  # 0.25
+```
+
+### Comments
+
+Lines starting with `#` are comments (ignored by R):
+
+```r
+# This explains what the code does
+cell_count <- 1500000  # Store cell count
+```
+
+## Data Types
+
+R has three primary data types for basic values:
+
+### Numeric
+
+Numbers (integers or decimals):
+
+```r
+cell_count <- 1500000
+temperature <- 37.5
+od600 <- 0.65
+
+class(cell_count)  # "numeric"
+```
+
+### Character
+
+Text strings (use quotes):
+
+```r
+species <- "Escherichia coli"
+treatment <- "control"
+gene_id <- "BRCA1"
+
+class(species)  # "character"
+```
+
+### Logical
+
+Boolean values (`TRUE` or `FALSE`):
+
+```r
+is_significant <- TRUE
+culture_contaminated <- FALSE
+p_value < 0.05  # Returns TRUE or FALSE
+
+class(is_significant)  # "logical"
+```
+
+## Vectors
+
+Vectors store multiple values of the same type. Essential for biological measurements.
+
+### Creating Vectors
+
+Use `c()` (combine) to create vectors:
+
+```r
+# Numeric vector
+od600_readings <- c(0.1, 0.3, 0.6, 0.9, 1.2)
+timepoints <- c(0, 2, 4, 6, 8)
+
+# Character vector
+samples <- c("control", "treatment_A", "treatment_B")
+
+# Logical vector
+significant <- c(TRUE, FALSE, TRUE, FALSE, TRUE)
+```
+
+### Vector Operations
+
+Operations apply to all elements:
+
+```r
+# Convert OD600 to estimated cell count
+cells_per_ml <- od600_readings * 8e8
+
+# Apply dilution factor
+dilution <- 10
+actual_concentration <- cells_per_ml * dilution
+```
+
+### Accessing Elements
+
+Use square brackets `[]`:
+
+```r
+# First element
+od600_readings[1]  # 0.1
+
+# Multiple elements
+od600_readings[c(3, 4)]  # 0.6, 0.9
+
+# Exclude elements
+od600_readings[-1]  # All except first
+
+# Conditional selection
+od600_readings[od600_readings > 0.5]  # 0.6, 0.9, 1.2
+```
+
+### Vector Functions
+
+Common functions for vectors:
+
+```r
+# Length
+length(od600_readings)  # 5
+
+# Summary statistics
+mean(od600_readings)    # 0.62
+median(od600_readings)  # 0.6
+sd(od600_readings)      # Standard deviation
+min(od600_readings)     # 0.1
+max(od600_readings)     # 1.2
+
+# Quick summary
+summary(od600_readings)
+```
+
+### Creating Sequences
+
+Useful for dilution series and time courses:
+
+```r
+# Simple sequence
+days <- 1:7  # 1, 2, 3, 4, 5, 6, 7
+
+# With specific step
+dilutions <- seq(from = 1, to = 0.001, by = -0.1)
+
+# Specify number of values
+gradient <- seq(from = 0, to = 100, length.out = 11)
+```
+
+## The Tidyverse
+
+The tidyverse is a collection of R packages for data science with consistent design philosophy.
+
+### Loading the Tidyverse
+
+```r
+# Install once (if needed)
+install.packages("tidyverse")
+
+# Load in each session
+library(tidyverse)
+```
+
+This loads core packages:
+- **dplyr**: Data manipulation
+- **ggplot2**: Visualization
+- **tidyr**: Data reshaping
+- **readr**: Data import
+- **purrr**: Functional programming
+- **stringr**: String manipulation
+
+### Tibbles
+
+Tibbles are tidyverse data frames with better printing:
+
+```r
+# Create a tibble
+experiment_data <- tibble(
+  sample_id = 1:5,
+  treatment = c("control", "control", "drug_A", "drug_A", "drug_B"),
+  cell_viability = c(98.2, 97.8, 85.3, 87.1, 45.2),
+  protein_conc = c(1.2, 1.3, 1.1, 1.0, 0.8)
+)
+
+experiment_data
+```
+
+## Data Import
+
+### Reading CSV Files
+
+```r
+# Import CSV
+my_data <- read_csv("path/to/file.csv")
+
+# View structure
+glimpse(my_data)
+head(my_data)
+```
+
+### Writing CSV Files
+
+```r
+# Save tibble to CSV
+write_csv(experiment_data, "results.csv")
+```
+
+### CSV Best Practices
+
+1. First row contains column names
+2. No spaces in column names (use underscores)
+3. Rectangular data (same columns per row)
+4. Save Excel files as CSV, not .xlsx
+
+## Data Exploration
+
+### Quick Overview
+
+```r
+# Compact overview
+glimpse(penguins)
+
+# Dimensions
+dim(penguins)      # rows × columns
+nrow(penguins)     # number of rows
+ncol(penguins)     # number of columns
+
+# Column names
+names(penguins)
+```
+
+### Summary Statistics
+
+```r
+# Statistical summary
+summary(penguins)
+
+# Specific column (use $ operator)
+mean(penguins$body_mass_g, na.rm = TRUE)
+sd(penguins$body_mass_g, na.rm = TRUE)
+```
+
+### Categorical Data
+
+```r
+# Count occurrences
+table(penguins$species)
+
+# Tidyverse way
+count(penguins, species)
+
+# Cross-tabulation
+table(penguins$species, penguins$island)
+```
+
+### Missing Data
+
+```r
+# Count NAs per column
+colSums(is.na(penguins))
+
+# Remove rows with any NA
+penguins_complete <- na.omit(penguins)
+
+# Remove NAs from calculations
+mean(penguins$body_mass_g, na.rm = TRUE)
+```
+
+## Quick Visualizations
+
+Basic ggplot2 syntax for data exploration:
+
+### Histogram
+
+```r
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(bins = 30, fill = "steelblue") +
+  labs(title = "Distribution of Body Mass",
+       x = "Body Mass (g)",
+       y = "Count")
+```
+
+### Boxplot
+
+```r
+ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
+  geom_boxplot() +
+  labs(title = "Body Mass by Species",
+       x = "Species",
+       y = "Body Mass (g)")
+```
+
+### Scatterplot
+
+```r
+ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Flipper Length vs Body Mass",
+       x = "Flipper Length (mm)",
+       y = "Body Mass (g)")
+```
+
+## Getting Help
+
+```r
+# Function documentation
+?mean
+?ggplot
+
+# Search for topics
+??regression
+
+# Examples
+example(mean)
+```
+
+## Data Exploration Checklist
+
+When working with new data:
+
+1. Load required packages
+2. Import data (`read_csv()`)
+3. Check structure (`glimpse()`)
+4. View dimensions (`dim()`)
+5. Inspect first rows (`head()`)
+6. Summary statistics (`summary()`)
+7. Check for missing values (`colSums(is.na())`)
+8. Create exploratory plots
+9. Understand each variable
+
+<Callout title="Biological Example: Palmer Penguins">
+The [Palmer Penguins dataset](https://allisonhorst.github.io/palmerpenguins/) contains morphological measurements from Antarctic penguin colonies. It's excellent for learning because it:
+
+- Contains real biological data
+- Has realistic missing values
+- Includes multiple species for comparison
+- Demonstrates common data analysis patterns
+
+Install with: `install.packages("palmerpenguins")`
+</Callout>
+
+## Common Patterns
+
+### Biological Calculations
+
+```r
+# Convert OD600 to cell count
+od600 <- c(0.1, 0.3, 0.6, 0.9)
+cells_per_ml <- od600 * 8e8
+
+# Calculate dilution
+original_conc <- 10
+dilution_factor <- 100
+final_conc <- original_conc / dilution_factor
+
+# Concentration unit conversion
+micromolar <- 5
+molar <- micromolar * 10^-6
+```
+
+### Data Inspection
+
+```r
+# Quick data check
+glimpse(my_data)                    # Structure
+summary(my_data)                    # Statistics
+colSums(is.na(my_data))            # Missing values
+count(my_data, categorical_var)     # Category counts
+```
+
+## Next Steps
+
+- [Data Manipulation](/r/data-manipulation) - Filter, select, and transform with dplyr
+- [Visualization](/r/visualization) - Create publication-quality plots with ggplot2
+- [Full Interactive Course](https://github.com/shandley/R-tutorials) - Hands-on exercises and homework
+
+## Resources
+
+- [R for Data Science](https://r4ds.hadley.nz/) - Comprehensive tidyverse book
+- [Tidyverse Documentation](https://www.tidyverse.org/) - Official reference
+- [RStudio Primers](https://posit.cloud/learn/primers) - Interactive tutorials
+- [Palmer Penguins](https://allisonhorst.github.io/palmerpenguins/) - Example dataset

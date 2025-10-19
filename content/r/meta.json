@@ -2,9 +2,12 @@
   "title": "R for Biologists",
   "pages": [
     "index",
+    "---Getting Started---",
+    "foundations",
     "---Core tidyverse---",
-    "---Specialized Tools---",
-    "---Statistical Analysis---",
-    "---Biological Workflows---"
+    "data-manipulation",
+    "visualization",
+    "---Biological Workflows---",
+    "rnaseq-analysis"
   ]
 }

@@ -1,0 +1,335 @@
+---
+title: "RNA-seq Analysis"
+description: "Tidyverse workflows for RNA-seq data exploration and visualization"
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+# RNA-seq Analysis
+
+Tidyverse approaches to RNA-seq data analysis and visualization.
+
+<Callout type="info" title="Interactive Learning">
+For a complete RNA-seq case study with exercises, see [Lesson 16](https://github.com/shandley/R-tutorials/blob/main/lesson16_rnaseq_case_study.Rmd) of the full course.
+</Callout>
+
+## RNA-seq Data Structure
+
+RNA-seq data typically comes as a counts matrix:
+- Rows: genes
+- Columns: samples
+- Values: read counts
+
+```r
+# Typical structure
+counts_matrix <- tibble(
+  gene_id = c("Gene_A", "Gene_B", "Gene_C", "Gene_D"),
+  control_1 = c(245, 1523, 89, 3421),
+  control_2 = c(289, 1601, 76, 3389),
+  treatment_1 = c(1834, 1489, 1256, 3512),
+  treatment_2 = c(1923, 1534, 1187, 3498)
+)
+```
+
+## Reshaping for tidyverse
+
+Convert wide format to long format for ggplot2:
+
+```r
+# Long format for plotting
+counts_long <- counts_matrix %>%
+  pivot_longer(
+    cols = -gene_id,
+    names_to = "sample",
+    values_to = "counts"
+  ) %>%
+  mutate(
+    condition = if_else(str_detect(sample, "control"), "Control", "Treatment"),
+    replicate = str_extract(sample, "\\d+")
+  )
+
+counts_long
+```
+
+## Quality Control
+
+### Library Size Distribution
+
+Check total counts per sample:
+
+```r
+counts_long %>%
+  group_by(sample, condition) %>%
+  summarise(library_size = sum(counts)) %>%
+  ggplot(aes(x = sample, y = library_size, fill = condition)) +
+  geom_col() +
+  labs(title = "Library Size by Sample",
+       y = "Total Read Counts") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### Count Distribution
+
+Visualize count distributions:
+
+```r
+counts_long %>%
+  ggplot(aes(x = log10(counts + 1), fill = condition)) +
+  geom_density(alpha = 0.5) +
+  facet_wrap(~sample) +
+  labs(title = "Count Distribution per Sample",
+       x = "log10(counts + 1)") +
+  theme_minimal()
+```
+
+## Normalization
+
+Log2 transformation with pseudocount:
+
+```r
+normalized <- counts_long %>%
+  mutate(log2_counts = log2(counts + 1))
+```
+
+For proper normalization, use DESeq2 or edgeR packages.
+
+## Exploratory Analysis
+
+### PCA (Principal Component Analysis)
+
+Requires wide format:
+
+```r
+library(FactoMineR)
+library(factoextra)
+
+# Prepare for PCA (samples as rows)
+pca_data <- counts_matrix %>%
+  column_to_rownames("gene_id") %>%
+  t() %>%  # Transpose
+  as.data.frame()
+
+# Run PCA
+pca_result <- PCA(pca_data, graph = FALSE)
+
+# Extract coordinates
+pca_coords <- as.data.frame(pca_result$ind$coord[, 1:2])
+pca_coords$sample <- rownames(pca_coords)
+pca_coords$condition <- if_else(
+  str_detect(pca_coords$sample, "control"),
+  "Control",
+  "Treatment"
+)
+
+# Plot
+ggplot(pca_coords, aes(x = Dim.1, y = Dim.2, color = condition, label = sample)) +
+  geom_point(size = 4) +
+  geom_text(vjust = -1) +
+  labs(title = "PCA of RNA-seq Samples",
+       x = "PC1",
+       y = "PC2") +
+  theme_minimal()
+```
+
+### Heatmap
+
+Visualize top variable genes:
+
+```r
+library(pheatmap)
+
+# Calculate variance per gene
+gene_vars <- counts_matrix %>%
+  pivot_longer(-gene_id, names_to = "sample", values_to = "counts") %>%
+  group_by(gene_id) %>%
+  summarise(variance = var(log2(counts + 1))) %>%
+  arrange(desc(variance)) %>%
+  slice_head(n = 50)  # Top 50 variable genes
+
+# Subset to top genes
+heatmap_data <- counts_matrix %>%
+  filter(gene_id %in% gene_vars$gene_id) %>%
+  column_to_rownames("gene_id")
+
+# Create heatmap
+pheatmap(
+  log2(heatmap_data + 1),
+  scale = "row",
+  clustering_distance_rows = "euclidean",
+  clustering_distance_cols = "euclidean",
+  main = "Top 50 Variable Genes"
+)
+```
+
+## Differential Expression
+
+### Fold Change Calculation
+
+```r
+# Calculate mean expression per condition
+de_results <- counts_long %>%
+  group_by(gene_id, condition) %>%
+  summarise(mean_counts = mean(counts)) %>%
+  pivot_wider(names_from = condition, values_from = mean_counts) %>%
+  mutate(
+    log2_fc = log2((Treatment + 1) / (Control + 1)),
+    abs_log2_fc = abs(log2_fc)
+  ) %>%
+  arrange(desc(abs_log2_fc))
+
+de_results
+```
+
+<Callout type="warning">
+This is a simplified example. For proper differential expression analysis, use DESeq2 or edgeR which account for biological variability and perform statistical testing.
+</Callout>
+
+### Volcano Plot
+
+```r
+# Simulated with p-values (use real DE results in practice)
+volcano_data <- de_results %>%
+  mutate(
+    # Simulated p-values for demonstration
+    pvalue = runif(n()),
+    padj = p.adjust(pvalue, method = "BH"),
+    significance = case_when(
+      abs(log2_fc) > 1 & padj < 0.05 ~ "Significant",
+      TRUE ~ "Not Significant"
+    )
+  )
+
+ggplot(volcano_data, aes(x = log2_fc, y = -log10(padj), color = significance)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = -log10(0.05), linetype = "dashed") +
+  geom_vline(xintercept = c(-1, 1), linetype = "dashed") +
+  scale_color_manual(values = c("Significant" = "red", "Not Significant" = "gray")) +
+  labs(title = "Volcano Plot",
+       x = "log2 Fold Change",
+       y = "-log10(adjusted p-value)") +
+  theme_minimal()
+```
+
+### MA Plot
+
+```r
+volcano_data %>%
+  mutate(mean_expression = (Control + Treatment) / 2) %>%
+  ggplot(aes(x = log2(mean_expression + 1), y = log2_fc, color = significance)) +
+  geom_point(alpha = 0.6) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  scale_color_manual(values = c("Significant" = "red", "Not Significant" = "gray")) +
+  labs(title = "MA Plot",
+       x = "log2 Mean Expression",
+       y = "log2 Fold Change") +
+  theme_minimal()
+```
+
+## Gene Expression Plots
+
+### Bar plot for specific genes
+
+```r
+# Compare expression of top DE genes
+top_genes <- de_results %>%
+  slice_head(n = 10) %>%
+  pull(gene_id)
+
+counts_long %>%
+  filter(gene_id %in% top_genes) %>%
+  ggplot(aes(x = gene_id, y = counts, fill = condition)) +
+  geom_boxplot() +
+  facet_wrap(~gene_id, scales = "free_y") +
+  labs(title = "Top Differentially Expressed Genes",
+       y = "Raw Counts") +
+  theme_minimal() +
+  theme(axis.text.x = element_blank())
+```
+
+### Heatmap of DE genes
+
+```r
+# Heatmap of top DE genes
+top_de_matrix <- counts_matrix %>%
+  filter(gene_id %in% top_genes) %>%
+  column_to_rownames("gene_id")
+
+pheatmap(
+  log2(top_de_matrix + 1),
+  scale = "row",
+  main = "Top DE Genes Expression",
+  show_rownames = TRUE
+)
+```
+
+## Gene Ontology Enrichment
+
+Prepare gene lists for enrichment tools:
+
+```r
+# Extract significantly upregulated genes
+upregulated_genes <- volcano_data %>%
+  filter(log2_fc > 1, padj < 0.05) %>%
+  pull(gene_id)
+
+# Save for external tools (e.g., DAVID, Enrichr)
+write_lines(upregulated_genes, "upregulated_genes.txt")
+
+# Extract downregulated genes
+downregulated_genes <- volcano_data %>%
+  filter(log2_fc < -1, padj < 0.05) %>%
+  pull(gene_id)
+
+write_lines(downregulated_genes, "downregulated_genes.txt")
+```
+
+## Common Workflow
+
+```r
+# 1. Load and reshape data
+counts_long <- counts_matrix %>%
+  pivot_longer(-gene_id, names_to = "sample", values_to = "counts")
+
+# 2. QC: Check library sizes
+counts_long %>%
+  group_by(sample) %>%
+  summarise(total = sum(counts))
+
+# 3. PCA for sample clustering
+# (Use prcomp or FactoMineR)
+
+# 4. Differential expression
+# (Use DESeq2 or edgeR)
+
+# 5. Visualize results
+# - Volcano plot
+# - MA plot
+# - Heatmaps
+
+# 6. Gene ontology enrichment
+# (Export gene lists)
+```
+
+## Recommended Packages
+
+For complete RNA-seq analysis:
+
+- **DESeq2**: Differential expression with negative binomial models
+- **edgeR**: Alternative DE analysis
+- **limma**: Linear models for microarrays (also works for RNA-seq)
+- **clusterProfiler**: GO/KEGG enrichment analysis
+- **EnhancedVolcano**: Enhanced volcano plots
+- **ComplexHeatmap**: Advanced heatmaps
+
+## Next Steps
+
+- [Full RNA-seq Tutorial](https://github.com/shandley/R-tutorials/blob/main/lesson16_rnaseq_case_study.Rmd)
+- [Microbiome Analysis](/r/microbiome-analysis)
+- [Metagenomics Analysis](/r/metagenomics-analysis)
+
+## Resources
+
+- [DESeq2 vignette](http://bioconductor.org/packages/release/bioc/vignettes/DESeq2/inst/doc/DESeq2.html)
+- [RNA-seq analysis workflow](https://www.bioconductor.org/packages/release/workflows/vignettes/rnaseqGene/inst/doc/rnaseqGene.html)
+- [HBC Training](https://hbctraining.github.io/main/) - Harvard Bioinformatics Core tutorials
