@@ -24,6 +24,6 @@ export function baseOptions(): BaseLayoutProps {
         url: '/',
       },
     ],
-    githubUrl: 'https://github.com/shandley/unix-for-biologists',
+    githubUrl: 'https://github.com/shandley/evomics-docs',
   };
 }

@@ -1,13 +1,23 @@
 {
-  "name": "unix-for-biologists",
+  "name": "evomics-docs",
   "version": "1.0.0",
   "private": true,
-  "description": "Command-Line Genomics from Beginner to Expert",
+  "description": "Comprehensive documentation for computational biology and bioinformatics education",
   "author": "Scott Handley",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shandley/unix-for-biologists"
+    "url": "https://github.com/shandley/evomics-docs"
   },
+  "homepage": "https://docs.evomics.org",
+  "keywords": [
+    "bioinformatics",
+    "computational-biology",
+    "documentation",
+    "unix",
+    "r",
+    "genomics",
+    "education"
+  ],
   "scripts": {
     "build": "next build",
     "dev": "next dev --turbo",
