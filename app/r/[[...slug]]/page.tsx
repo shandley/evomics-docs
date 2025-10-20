@@ -17,16 +17,13 @@ export default async function Page(props: PageProps<'/r/[[...slug]]'>) {
 
   const MDX = page.data.body;
 
-  // Filter TOC to include H2 and H3 headings (depth 2 and 3)
-  const filteredToc = page.data.toc?.filter((item) => item.depth <= 3) || [];
-
   return (
     <DocsPage
-      toc={filteredToc}
+      toc={page.data.toc}
       full={page.data.full}
       tableOfContent={{
-        enabled: true,
-        // Include headings up to depth 3 (H3)
+        minHeadingDepth: 2,
+        maxHeadingDepth: 3,
       }}
     >
       <DocsTitle>{page.data.title}</DocsTitle>
