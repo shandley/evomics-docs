@@ -136,6 +136,8 @@ ggplot(pca_coords, aes(x = Dim.1, y = Dim.2, color = condition, label = sample))
   theme_minimal()
 ```
 
+![PCA plot showing sample clustering by treatment condition](/images/r/pca.png)
+
 ### Heatmap
 
 Visualize top variable genes:
@@ -165,6 +167,8 @@ pheatmap(
   main = "Top 50 Variable Genes"
 )
 ```
+
+![Heatmap showing expression patterns of top variable genes across samples](/images/r/heatmap.png)
 
 ## Differential Expression
 
@@ -217,6 +221,8 @@ ggplot(volcano_data, aes(x = log2_fc, y = -log10(padj), color = significance)) +
   theme_minimal()
 ```
 
+![Volcano plot highlighting significantly differentially expressed genes](/images/r/volcano.png)
+
 ### MA Plot
 
 ```r
@@ -231,6 +237,8 @@ volcano_data %>%
        y = "log2 Fold Change") +
   theme_minimal()
 ```
+
+![MA plot showing fold change vs mean expression with significant genes highlighted](/images/r/ma_plot.png)
 
 ## Gene Expression Plots
 
