@@ -15,7 +15,7 @@ For hands-on exercises, see [Lesson 3](https://github.com/shandley/r-tidyverse-f
 
 ## The Pipe Operator
 
-The pipe `%>%` (or `|>`) passes results from one function to the next:
+The pipe `%>%` (or `|>`) is the foundation of tidyverse workflows, passing results from one function to the next:
 
 ```r
 # Without pipe (hard to read)
@@ -267,7 +267,7 @@ penguins %>%
 
 ## Chaining Operations
 
-Combine functions to answer complex questions:
+The power of dplyr comes from combining functions to answer complex questions in a readable pipeline:
 
 ### Example 1: Filter + Select + Arrange
 
@@ -330,6 +330,8 @@ infection_data %>%
 
 ## Common Patterns
 
+Frequently used dplyr patterns for biological data analysis.
+
 ### Calculate group statistics
 
 ```r
@@ -363,6 +365,8 @@ data %>%
 ```
 
 ## Common Mistakes
+
+Avoid these frequent errors when working with dplyr.
 
 ### Forgetting assignment
 
