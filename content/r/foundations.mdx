@@ -314,6 +314,8 @@ ggplot(penguins, aes(x = body_mass_g)) +
        y = "Count")
 ```
 
+![Histogram showing distribution of penguin body mass](/images/r/histogram.png)
+
 ### Boxplot
 
 ```r
@@ -324,6 +326,8 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
        y = "Body Mass (g)")
 ```
 
+![Boxplot comparing body mass across three penguin species](/images/r/boxplot.png)
+
 ### Scatterplot
 
 ```r
@@ -333,6 +337,8 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
        x = "Flipper Length (mm)",
        y = "Body Mass (g)")
 ```
+
+![Scatterplot showing relationship between flipper length and body mass, colored by species](/images/r/scatterplot.png)
 
 ## Getting Help
 
