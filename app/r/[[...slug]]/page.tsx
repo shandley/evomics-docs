@@ -21,7 +21,14 @@ export default async function Page(props: PageProps<'/r/[[...slug]]'>) {
   const filteredToc = page.data.toc?.filter((item) => item.depth <= 3) || [];
 
   return (
-    <DocsPage toc={filteredToc} full={page.data.full}>
+    <DocsPage
+      toc={filteredToc}
+      full={page.data.full}
+      tableOfContent={{
+        enabled: true,
+        // Include headings up to depth 3 (H3)
+      }}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
