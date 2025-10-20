@@ -53,6 +53,8 @@ counts_long
 
 ## Quality Control
 
+Essential QC checks to ensure data quality before analysis.
+
 ### Library Size Distribution
 
 Check total counts per sample:
@@ -95,6 +97,8 @@ normalized <- counts_long %>%
 For proper normalization, use DESeq2 or edgeR packages.
 
 ## Exploratory Analysis
+
+Visualize sample relationships and identify patterns in your RNA-seq data.
 
 ### PCA (Principal Component Analysis)
 
@@ -164,6 +168,8 @@ pheatmap(
 
 ## Differential Expression
 
+Identify genes with significant expression changes between conditions.
+
 ### Fold Change Calculation
 
 ```r
@@ -227,6 +233,8 @@ volcano_data %>%
 ```
 
 ## Gene Expression Plots
+
+Visualize expression patterns of individual genes or gene sets.
 
 ### Bar plot for specific genes
 
