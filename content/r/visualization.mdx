@@ -46,6 +46,8 @@ ggplot(penguins, aes(x = body_mass_g)) +
        y = "Count")
 ```
 
+![Histogram example showing distribution of penguin body mass](/images/r/histogram.png)
+
 ### Boxplot
 
 Compare distributions across groups:
@@ -59,6 +61,8 @@ ggplot(penguins, aes(x = species, y = body_mass_g, fill = species)) +
   theme(legend.position = "none")
 ```
 
+![Boxplot comparing body mass across three penguin species](/images/r/boxplot.png)
+
 ### Scatterplot
 
 Relationship between two continuous variables:
@@ -71,6 +75,8 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
        y = "Body Mass (g)",
        color = "Species")
 ```
+
+![Scatterplot showing relationship between flipper length and body mass, colored by species](/images/r/scatterplot.png)
 
 ### Bar Plot
 
@@ -114,6 +120,8 @@ ggplot(growth_data, aes(x = time_hours, y = od600)) +
        x = "Time (hours)",
        y = "OD600")
 ```
+
+![Line plot showing bacterial growth over time](/images/r/lineplot.png)
 
 ## Aesthetics (aes)
 
