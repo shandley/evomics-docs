@@ -15,7 +15,7 @@ For detailed tutorials and exercises, see [Lesson 5](https://github.com/shandley
 
 ## Grammar of Graphics
 
-ggplot2 uses a layered approach:
+ggplot2 builds plots using a systematic, layered approach based on the Grammar of Graphics:
 
 1. **Data**: Your dataset
 2. **Aesthetics** (`aes`): Map variables to visual properties
@@ -31,6 +31,8 @@ ggplot(data, aes(x = variable1, y = variable2)) +
 ```
 
 ## Common Plot Types
+
+Essential plot types for exploratory data analysis and publication.
 
 ### Histogram
 
@@ -115,7 +117,7 @@ ggplot(growth_data, aes(x = time_hours, y = od600)) +
 
 ## Aesthetics (aes)
 
-Map data to visual properties:
+Aesthetics map your data variables to visual properties of the plot:
 
 - `x`, `y` - position
 - `color` - point/line color
@@ -208,7 +210,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = bill_depth_mm, color = body_mass_g)
 
 ## Statistical Layers
 
-Add statistical summaries:
+Enhance plots with statistical transformations and summaries:
 
 ```r
 # Add trend line
