@@ -15,6 +15,8 @@ For hands-on exercises and detailed tutorials, see [Lesson 1](https://github.com
 
 ## R Basics
 
+R provides a powerful environment for biological data analysis. Let's start with the fundamentals.
+
 ### R as a Calculator
 
 R performs standard mathematical operations:
@@ -52,7 +54,7 @@ cell_count <- 1500000  # Store cell count
 
 ## Data Types
 
-R has three primary data types for basic values:
+R has three primary data types for basic values.
 
 ### Numeric
 
@@ -90,9 +92,9 @@ p_value < 0.05  # Returns TRUE or FALSE
 class(is_significant)  # "logical"
 ```
 
-## Vectors
+## Working with Vectors
 
-Vectors store multiple values of the same type. Essential for biological measurements.
+Vectors store multiple values of the same type and are essential for biological measurements.
 
 ### Creating Vectors
 
@@ -175,9 +177,9 @@ dilutions <- seq(from = 1, to = 0.001, by = -0.1)
 gradient <- seq(from = 0, to = 100, length.out = 11)
 ```
 
-## The Tidyverse
+## Introduction to the Tidyverse
 
-The tidyverse is a collection of R packages for data science with consistent design philosophy.
+The tidyverse is a collection of R packages for data science with a consistent design philosophy and grammar.
 
 ### Loading the Tidyverse
 
@@ -213,7 +215,9 @@ experiment_data <- tibble(
 experiment_data
 ```
 
-## Data Import
+## Importing Data
+
+Working with external data files is essential for real-world analysis.
 
 ### Reading CSV Files
 
@@ -240,7 +244,9 @@ write_csv(experiment_data, "results.csv")
 3. Rectangular data (same columns per row)
 4. Save Excel files as CSV, not .xlsx
 
-## Data Exploration
+## Exploring Your Data
+
+Essential functions for understanding your datasets.
 
 ### Quick Overview
 
@@ -294,9 +300,9 @@ penguins_complete <- na.omit(penguins)
 mean(penguins$body_mass_g, na.rm = TRUE)
 ```
 
-## Quick Visualizations
+## Creating Quick Plots
 
-Basic ggplot2 syntax for data exploration:
+Basic ggplot2 syntax for exploratory data visualization:
 
 ### Histogram
 
@@ -342,9 +348,9 @@ ggplot(penguins, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
 example(mean)
 ```
 
-## Data Exploration Checklist
+## Data Analysis Workflow
 
-When working with new data:
+When working with new data, follow this systematic approach:
 
 1. Load required packages
 2. Import data (`read_csv()`)
@@ -367,7 +373,9 @@ The [Palmer Penguins dataset](https://allisonhorst.github.io/palmerpenguins/) co
 Install with: `install.packages("palmerpenguins")`
 </Callout>
 
-## Common Patterns
+## Common Analysis Patterns
+
+Essential code patterns for biological data analysis.
 
 ### Biological Calculations
 
